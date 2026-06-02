@@ -302,13 +302,48 @@
             </div>
             <div class="mt-10 text-center">
                 <button onclick="showStep('step4')" class="bg-accent hover:bg-orange-600 text-white font-bold py-4 px-10 rounded-xl shadow-lg transform transition hover:-translate-y-1 text-lg flex items-center mx-auto">
-                    この内容で安全なデモサイトを生成する <i class="fa-solid fa-arrow-right ml-3"></i>
+                    Smartpageでの解決策を見る <i class="fa-solid fa-arrow-right ml-3"></i>
                 </button>
             </div>
         </div>
 
-        <!-- STEP 4: デモサイト提示＆クロージング画面 -->
-        <div id="step4" class="w-full max-w-6xl hidden-step mb-8">
+        <!-- STEP 4: Smartpageのご提案（スクショ画面） -->
+        <div id="step4" class="w-full max-w-6xl bg-white rounded-2xl shadow-xl overflow-hidden hidden-step border border-gray-100 mb-8">
+            <div class="p-8 md:p-12">
+                <div class="text-center mb-8">
+                    <h2 class="text-3xl font-bold text-primary mb-4">WordPressの「放置」を卒業！</h2>
+                    <p class="text-gray-600 text-lg">Smartpageで実現する中小企業のWeb安全・時短戦略</p>
+                </div>
+                
+                <!-- スライド（スクショ）画像 -->
+                <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 cursor-pointer hover:shadow-md transition relative group" onclick="openModal('proposalImageModal')">
+                    <img src="./スマートページご提案書.png" alt="Smartpageご提案書" class="w-full rounded-lg shadow-sm" onerror="this.onerror=null; this.src='data:image/svg+xml;charset=utf-8,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'1200\' height=\'675\'%3E%3Crect width=\'100%25\' height=\'100%25\' fill=\'%23f1f5f9\'/%3E%3Ctext x=\'50%25\' y=\'45%25\' font-family=\'sans-serif\' font-size=\'36\' font-weight=\'bold\' fill=\'%23475569\' text-anchor=\'middle\'%3Eプレビューでは画像が表示されません%3C/text%3E%3Ctext x=\'50%25\' y=\'55%25\' font-family=\'sans-serif\' font-size=\'24\' fill=\'%2364748b\' text-anchor=\'middle\'%3EHTMLファイルと同じフォルダに「スマートページご提案書.png」を配置してください%3C/text%3E%3C/svg%3E';">
+                    <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition rounded-xl flex items-center justify-center">
+                        <div class="bg-white text-primary font-bold px-6 py-3 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition transform translate-y-2 group-hover:translate-y-0 text-lg">
+                            <i class="fa-solid fa-magnifying-glass-plus mr-2"></i> スライドを全画面で見る
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-8 bg-blue-50 p-6 rounded-xl border-l-4 border-secondary text-gray-700">
+                    <p class="font-bold text-primary mb-2"><i class="fa-solid fa-lightbulb text-accent mr-2"></i> 上記資料のポイント</p>
+                    <ul class="list-disc list-inside space-y-2 ml-4 text-sm">
+                        <li>保守管理ゼロの<strong>「強固なクラウド環境」</strong>で脆弱性リスクから解放。</li>
+                        <li>PC不要、スマホで<strong>「見たまま」直感編集</strong>で集客機会の損失を防ぐ。</li>
+                        <li>SEO評価を安全に引き継ぐ<strong>「301設定」</strong>。</li>
+                    </ul>
+                </div>
+
+                <div class="mt-10 text-center">
+                    <button onclick="showStep('step5')" class="bg-primary hover:bg-blue-900 text-white font-bold py-4 px-10 rounded-xl shadow-lg transform transition hover:-translate-y-1 text-lg flex items-center justify-center mx-auto">
+                        実際のデモサイトを触ってみる <i class="fa-solid fa-mobile-screen-button ml-3"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- STEP 5: デモサイト提示＆クロージング画面 -->
+        <div id="step5" class="w-full max-w-6xl hidden-step mb-8">
             <div class="bg-blue-50 border-l-4 border-secondary p-4 mb-8 rounded-r-lg shadow-sm flex items-start">
                 <i class="fa-solid fa-shield-check text-secondary mt-1 mr-3 text-xl"></i>
                 <div>
@@ -364,13 +399,18 @@
                 <div class="w-full md:w-1/2 space-y-6 order-1 md:order-2">
                     <h2 class="text-3xl font-bold text-primary mb-6">Smartpageが選ばれる理由</h2>
                     
-                    <!-- 提供いただいたスクショ画像を配置 -->
-                    <div class="bg-white p-2 rounded-xl shadow-sm border border-gray-100 cursor-pointer hover:shadow-md transition relative group" onclick="openModal('proposalImageModal')">
-                        <img src="./スマートページご提案書.png" alt="Smartpageご提案書" class="w-full rounded-lg" onerror="this.onerror=null; this.src='data:image/svg+xml;charset=utf-8,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'800\' height=\'450\'%3E%3Crect width=\'100%25\' height=\'100%25\' fill=\'%23f1f5f9\'/%3E%3Ctext x=\'50%25\' y=\'45%25\' font-family=\'sans-serif\' font-size=\'24\' font-weight=\'bold\' fill=\'%23475569\' text-anchor=\'middle\'%3Eプレビューでは画像が表示されません%3C/text%3E%3Ctext x=\'50%25\' y=\'55%25\' font-family=\'sans-serif\' font-size=\'16\' fill=\'%2364748b\' text-anchor=\'middle\'%3E実際のパソコン上では「スマートページご提案書.png」が表示されます%3C/text%3E%3C/svg%3E';">
-                        <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition rounded-xl flex items-center justify-center">
-                            <div class="bg-white text-primary font-bold px-4 py-2 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition transform translate-y-2 group-hover:translate-y-0">
-                                <i class="fa-solid fa-magnifying-glass-plus mr-1"></i> タップして拡大
-                            </div>
+                    <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-100 flex items-start gap-4">
+                        <div class="bg-orange-100 text-accent p-3 rounded-lg"><i class="fa-solid fa-mobile-screen-button text-xl"></i></div>
+                        <div>
+                            <h4 class="font-bold text-lg text-gray-800">見たまま編集（専門知識ゼロ）</h4>
+                            <p class="text-gray-500 text-sm mt-1">パソコン不要。左のデモ画面のように、現場のスマホから画面上の要素を直接タップするだけで即時更新できます。</p>
+                        </div>
+                    </div>
+                    <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-100 flex items-start gap-4">
+                        <div class="bg-blue-100 text-secondary p-3 rounded-lg"><i class="fa-solid fa-shield-halved text-xl"></i></div>
+                        <div>
+                            <h4 class="font-bold text-lg text-gray-800">保守管理ゼロ（強固なセキュリティ）</h4>
+                            <p class="text-gray-500 text-sm mt-1">システム側が自動アップデートを実施。放置による脆弱性リスクや突発的な復旧コストがなくなります。</p>
                         </div>
                     </div>
                     
@@ -455,7 +495,7 @@
                     </p>
                 </div>
                 <div>
-                    <h4 class="font-bold text-secondary border-b-2 border-blue-100 pb-2 mb-4 text-lg">4ステップ営業フロー</h4>
+                    <h4 class="font-bold text-secondary border-b-2 border-blue-100 pb-2 mb-4 text-lg">5ステップ営業フロー</h4>
                     <ul class="space-y-3">
                         <li class="flex items-start bg-slate-50 p-3 rounded-xl border border-slate-100">
                             <span class="bg-secondary text-white font-bold rounded-full w-6 h-6 flex items-center justify-center mr-3 shrink-0 text-sm">1</span>
@@ -481,8 +521,15 @@
                         <li class="flex items-start bg-slate-50 p-3 rounded-xl border border-slate-100">
                             <span class="bg-secondary text-white font-bold rounded-full w-6 h-6 flex items-center justify-center mr-3 shrink-0 text-sm">4</span>
                             <div>
-                                <strong class="text-gray-800 text-sm">編集体験＆スライド提示</strong><br>
-                                <span class="text-gray-500 text-xs mt-0.5 block">デモの文字を打ち換えさせ、提案書画像を見せながら仮申込を促します。</span>
+                                <strong class="text-gray-800 text-sm">ご提案書提示（解決策の提示）</strong><br>
+                                <span class="text-gray-500 text-xs mt-0.5 block">スライド画像を全画面で見せ、課題に対するSmartpageの解決策を説明します。</span>
+                            </div>
+                        </li>
+                        <li class="flex items-start bg-slate-50 p-3 rounded-xl border border-slate-100">
+                            <span class="bg-secondary text-white font-bold rounded-full w-6 h-6 flex items-center justify-center mr-3 shrink-0 text-sm">5</span>
+                            <div>
+                                <strong class="text-gray-800 text-sm">編集体験＆クロージング</strong><br>
+                                <span class="text-gray-500 text-xs mt-0.5 block">デモの文字を顧客に打ち換えさせ、無料キャンペーン枠の仮申込を促します。</span>
                             </div>
                         </li>
                     </ul>
@@ -703,7 +750,7 @@
             }
         };
 
-        const steps = ['step1', 'loading', 'step2', 'step3', 'step4'];
+        const steps = ['step1', 'loading', 'step2', 'step3', 'step4', 'step5'];
         let myChart = null; 
 
         // グローバル変数（送信情報保持用）
@@ -724,7 +771,7 @@
 
             if (targetId === 'step2') drawRadarChart();
             if (targetId === 'step3') startAITyping();
-            if (targetId === 'step4') animateSchedule();
+            if (targetId === 'step5') animateSchedule();
         }
 
         function startDiagnosis() {
@@ -884,7 +931,7 @@
             showStep('step1');
         }
 
-        // STEP4の「無料キャンペーン枠を仮押さえする」ボタンから呼ばれる関数
+        // STEP5の「無料キャンペーン枠を仮押さえする」ボタンから呼ばれる関数
         function openOrderModal() {
             // 設定画面に入力されている「顧客メールアドレス（デモ用）」を取得
             const demoEmail = document.getElementById('demoCustomerEmail').value;
@@ -914,7 +961,7 @@
         function openSendMethodModal() {
             closeModal('orderModal');
             
-            const subject = `【Smartpage】無料キャンペーン枠 仮申し込みの控え（${currentOrderData.name} 様）`;
+            const subject = `【Smartpage仮申込】${currentOrderData.name} 様`;
             const body = `※本メールは自社担当者およびお客様へ同時送信されています。\n\n以下の内容で初期構築無料枠の仮申し込みを受け付けました。\n\n・貴社名/店舗名: ${currentOrderData.name}\n・対象WebサイトURL: ${currentOrderData.url}\n・顧客連絡先メール: ${currentOrderData.email}\n\n担当者より追って正式なご案内をさせていただきます。`;
             
             const toEmails = `${currentOrderData.salesEmail}, ${currentOrderData.email}`;
