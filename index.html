@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smartpage リプレイス営業支援アプリ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#002B5B', // Smartpage風 深いネイビー
+                        secondary: '#0066CC', // Smartpage風 メインブルー
+                        accent: '#FF6600', // Smartpage風 アクセントオレンジ
+                        danger: '#E60012', // 警告レッド
+                        surface: '#F4F7FB' // ライトブルーグレー（背景）
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        .hidden-step { display: none !important; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .smartphone-frame {
+            width: 340px;
+            height: 680px;
+            border: 14px solid #1f2937;
+            border-radius: 40px;
+            position: relative;
+            background-color: #fff;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            margin: 0 auto;
+        }
+        .smartphone-frame::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 140px;
+            height: 28px;
+            background-color: #1f2937;
+            border-bottom-left-radius: 14px;
+            border-bottom-right-radius: 14px;
+            z-index: 20;
+        }
+
+        .demo-screen {
+            width: 100%;
+            height: 100%;
+            overflow-y: auto;
+            position: relative;
+            background-color: #f3f4f6;
+            -ms-overflow-style: none; scrollbar-width: none;
+        }
+        .demo-screen::-webkit-scrollbar { display: none; }
+
+        .editable-element {
+            position: relative;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        .editable-element:hover {
+            outline: 3px dashed #FF6600;
+            outline-offset: -3px;
+        }
+        .editable-element:hover::after {
+            content: 'タップして編集';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #FF6600;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: bold;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .loader {
+            border: 4px solid #e5e7eb;
+            border-top: 4px solid #0066CC;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* モーダル背景 */
+        .modal-backdrop {
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+        }
+
+        /* トースト通知 */
+        #toast {
+            transition: opacity 0.3s, transform 0.3s;
+            transform: translateY(20px);
+            opacity: 0;
+            pointer-events: none;
+        }
+        #toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="bg-surface text-slate-800 font-sans min-h-screen flex flex-col relative">
+
+    <!-- ヘッダー -->
+    <header class="bg-primary text-white shadow-md relative z-40">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+            <h1 class="text-xl font-bold flex items-center">
+                <span class="bg-white text-primary rounded-sm w-6 h-6 flex items-center justify-center mr-2 text-sm font-black">S</span>
+                Smartpage Sales App
+            </h1>
+            <div class="flex items-center space-x-3">
+                <button onclick="openModal('howtoModal')" class="bg-white/10 hover:bg-white/20 transition px-3 py-1.5 rounded-full text-sm font-medium flex items-center">
+                    <i class="fa-solid fa-circle-question mr-1.5"></i> 使い方
+                </button>
+                <button onclick="openModal('settingsModal')" class="bg-white/10 hover:bg-white/20 transition w-8 h-8 rounded-full flex items-center justify-center">
+                    <i class="fa-solid fa-gear"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow flex items-center justify-center p-4">
+        
+        <!-- ==========================================
+             STEP 1: 診断画面
+        =========================================== -->
+        <div id="step1" class="w-full max-w-3xl bg-white rounded-2xl shadow-xl p-8 md:p-12 fade-in">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">顧客サイト診断</h2>
+                <p class="text-gray-500">既存のWordPressサイトを分析し、最適なリプレイス提案を生成します。</p>
+            </div>
+
+            <form id="diagnosisForm" onsubmit="event.preventDefault(); startDiagnosis();" class="space-y-6">
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">顧客のWebサイトURL</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                            <i class="fa-solid fa-link text-gray-400"></i>
+                        </div>
+                        <input type="url" id="targetUrl" placeholder="https://example.com" required
+                            class="w-full pl-11 pr-4 py-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-secondary focus:border-secondary outline-none transition text-lg">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">業種カテゴリー</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                            <i class="fa-solid fa-building text-gray-400"></i>
+                        </div>
+                        <select id="industrySelect" class="w-full pl-11 pr-4 py-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-secondary focus:border-secondary outline-none transition text-lg appearance-none bg-white">
+                            <option value="restaurant">飲食・カフェ</option>
+                            <option value="construction">建築・リフォーム</option>
+                            <option value="salon">美容室・サロン</option>
+                            <option value="professional">士業・IT・コンサル</option>
+                            <option value="other">その他・一般企業</option>
+                        </select>
+                        <div class="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none">
+                            <i class="fa-solid fa-chevron-down text-gray-400"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-4">
+                    <button type="submit" class="w-full bg-secondary hover:bg-blue-700 text-white font-bold py-4 px-8 rounded-xl shadow-lg transform transition hover:-translate-y-1 text-lg flex justify-center items-center">
+                        <i class="fa-solid fa-magnifying-glass mr-2"></i> セキュリティと表示速度を診断する
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- ==========================================
+             LOADING: ローディング画面
+        =========================================== -->
+        <div id="loading" class="w-full max-w-lg text-center hidden-step">
+            <div class="loader mb-6"></div>
+            <h3 class="text-2xl font-bold text-gray-800 mb-2">サイトを分析中...</h3>
+            <p class="text-gray-500 loading-text">WordPressのバージョンを確認しています</p>
+        </div>
+
+        <!-- ==========================================
+             STEP 2: ヒアリング＆トーク画面
+        =========================================== -->
+        <div id="step2" class="w-full max-w-4xl bg-white rounded-2xl shadow-xl overflow-hidden hidden-step">
+            <div class="bg-red-50 border-b-4 border-danger p-6 text-center">
+                <div class="inline-flex items-center justify-center w-16 h-16 bg-red-100 rounded-full mb-3 text-danger">
+                    <i class="fa-solid fa-triangle-exclamation text-3xl"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-danger">診断結果：危険（アップデート放置の可能性大）</h2>
+                <p class="text-red-700 mt-2">重大な脆弱性が放置されており、サイバー攻撃の標的になりやすい状態です。</p>
+            </div>
+
+            <div class="p-8 md:p-12">
+                <div class="mb-6 flex items-center">
+                    <span class="bg-blue-100 text-secondary font-bold px-3 py-1 rounded-full text-sm mr-3">営業トーク</span>
+                    <span class="text-gray-500 text-sm">以下の内容を顧客に読み上げてください</span>
+                </div>
+
+                <div class="space-y-6 bg-slate-50 p-6 rounded-xl border border-slate-200 text-lg leading-relaxed text-gray-700">
+                    <p>
+                        「御社のサイトを簡易診断したところ、システムの更新が止まっており、<strong class="text-danger border-b-2 border-danger">サイバー攻撃の標的になりやすい状態</strong>です。」
+                    </p>
+                    <p>
+                        「現在、中小企業のサイバー被害額は<strong class="text-secondary text-xl">平均73万円</strong>に上ります。万が一サイトが乗っ取られると、顧客情報の流出だけでなく、他社への攻撃の『踏み台』にされ、<strong class="text-gray-900">加害者になってしまうリスク</strong>があります。」
+                    </p>
+                    <p>
+                        「専任のIT担当者がいなくても、当社の次世代CMS『Smartpage』なら、<strong class="text-accent">面倒な保守・セキュリティ対策をシステム側で完全に自動化</strong>できます。」
+                    </p>
+                </div>
+
+                <div class="mt-10 text-center">
+                    <button onclick="showStep('step3')" class="bg-primary hover:bg-blue-900 text-white font-bold py-4 px-10 rounded-xl shadow-lg transform transition hover:-translate-y-1 text-lg flex items-center mx-auto">
+                        AIによるコンテンツ最適化案を見る <i class="fa-solid fa-arrow-right ml-3"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==========================================
+             STEP 3: AIライティング提案画面
+        =========================================== -->
+        <div id="step3" class="w-full max-w-5xl bg-white rounded-2xl shadow-xl p-8 md:p-12 hidden-step">
+            <div class="text-center mb-10">
+                <div class="inline-flex items-center justify-center bg-blue-100 text-secondary px-4 py-1 rounded-full text-sm font-bold mb-4">
+                    <i class="fa-solid fa-wand-magic-sparkles mr-2"></i>AIライティング機能
+                </div>
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">古い文章を、スマホ時代に合わせて一瞬で最適化</h2>
+                <p class="text-gray-500">元のサイトから抽出したテキストを、AIが読者の心を掴む構成・文字数にブラッシュアップしました。</p>
+            </div>
+
+            <div class="flex flex-col lg:flex-row gap-6 items-stretch">
+                <!-- 左側：元のテキスト -->
+                <div class="flex-1 bg-gray-50 rounded-xl p-6 border border-gray-200 opacity-80">
+                    <div class="text-sm font-bold text-gray-500 mb-3 flex items-center">
+                        <i class="fa-solid fa-file-lines mr-2"></i> 元のサイトのテキスト（抽出）
+                    </div>
+                    <div class="bg-white p-4 rounded border border-gray-300 text-gray-600 text-sm h-full shadow-inner">
+                        <p id="demoOldText" class="leading-relaxed"></p>
+                        <div class="mt-4 text-xs text-red-500 font-bold">
+                            <i class="fa-solid fa-circle-exclamation mr-1"></i>課題：スマホでは文字が多すぎて読まれにくい状態です。
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 中央：変換アイコン -->
+                <div class="flex justify-center items-center py-4 lg:py-0">
+                    <div class="bg-accent text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg transform rotate-90 lg:rotate-0">
+                        <i class="fa-solid fa-arrow-right text-xl"></i>
+                    </div>
+                </div>
+
+                <!-- 右側：AI最適化テキスト -->
+                <div class="flex-1 bg-blue-50 rounded-xl p-6 border border-blue-200 shadow-md">
+                    <div class="text-sm font-bold text-secondary mb-3 flex items-center">
+                        <i class="fa-solid fa-robot mr-2"></i> AIによる新構成案
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <div class="bg-white p-4 rounded-lg shadow-sm border-l-4 border-secondary">
+                            <div class="flex justify-between items-end mb-1">
+                                <span class="text-xs font-bold text-gray-500">メインキャッチ</span>
+                                <span class="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded" id="charCountCatch"></span>
+                            </div>
+                            <p id="demoNewCatch" class="text-xl font-bold text-gray-800"></p>
+                        </div>
+
+                        <div class="bg-white p-4 rounded-lg shadow-sm border-l-4 border-blue-300">
+                            <div class="flex justify-between items-end mb-1">
+                                <span class="text-xs font-bold text-gray-500">サブキャッチ</span>
+                                <span class="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded" id="charCountSub"></span>
+                            </div>
+                            <p id="demoNewSub" class="text-base font-bold text-gray-700"></p>
+                        </div>
+
+                        <div class="bg-white p-4 rounded-lg shadow-sm border-l-4 border-gray-300">
+                            <div class="flex justify-between items-end mb-1">
+                                <span class="text-xs font-bold text-gray-500">詳細説明</span>
+                                <span class="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded" id="charCountDesc"></span>
+                            </div>
+                            <p id="demoNewDesc" class="text-sm text-gray-600 leading-relaxed"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-10 text-center">
+                <button onclick="showStep('step4')" class="bg-accent hover:bg-orange-600 text-white font-bold py-4 px-10 rounded-xl shadow-lg transform transition hover:-translate-y-1 text-lg flex items-center mx-auto">
+                    この内容で安全なデモサイトを生成する <i class="fa-solid fa-arrow-right ml-3"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- ==========================================
+             STEP 4: デモサイト提示画面
+        =========================================== -->
+        <div id="step4" class="w-full max-w-6xl hidden-step">
+            
+            <div class="bg-blue-50 border-l-4 border-secondary p-4 mb-8 rounded-r-lg shadow-sm flex items-start">
+                <i class="fa-solid fa-robot text-secondary mt-1 mr-3 text-xl"></i>
+                <div>
+                    <h3 class="font-bold text-primary">AIによる安全なデモ生成完了</h3>
+                    <p class="text-blue-800 text-sm mt-1">
+                        前の制作会社の写真（著作権）を侵害しないよう、AIが安全な商用フリー画像を自動選定しました。過去3万件の実績データに基づき最適なレイアウトを構築しています。
+                    </p>
+                </div>
+            </div>
+
+            <div class="flex flex-col md:flex-row gap-8 items-center md:items-start justify-center">
+                
+                <!-- 左カラム：訴求ポイント -->
+                <div class="w-full md:w-1/2 space-y-6">
+                    <h2 class="text-3xl font-bold text-primary mb-6">Smartpageが選ばれる理由</h2>
+                    
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex items-start gap-4">
+                        <div class="bg-orange-100 text-accent p-3 rounded-lg"><i class="fa-solid fa-mobile-screen-button text-xl"></i></div>
+                        <div>
+                            <h4 class="font-bold text-lg text-primary">見たまま編集（専門知識ゼロ）</h4>
+                            <p class="text-gray-500 text-sm mt-1">パソコン不要。現場のスマートフォンから、画面上の要素を直接タップするだけで写真やテキストを即時更新できます。</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex items-start gap-4">
+                        <div class="bg-blue-100 text-secondary p-3 rounded-lg"><i class="fa-solid fa-shield-halved text-xl"></i></div>
+                        <div>
+                            <h4 class="font-bold text-lg text-primary">保守管理ゼロ（強固なセキュリティ）</h4>
+                            <p class="text-gray-500 text-sm mt-1">国産クラウドインフラ上でシステム側が自動アップデート。放置による脆弱性リスクや突発的な復旧コストがなくなります。</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex items-start gap-4">
+                        <div class="bg-green-100 text-green-600 p-3 rounded-lg"><i class="fa-solid fa-arrow-trend-up text-xl"></i></div>
+                        <div>
+                            <h4 class="font-bold text-lg text-primary">301リダイレクトでSEO保護</h4>
+                            <p class="text-gray-500 text-sm mt-1">古いURLから新しいURLへ一括マッピング。これまでに蓄積したGoogleからの評価（SEO）を落とさずに安全に引き継ぎます。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="pt-4 text-center md:text-left">
+                        <button onclick="resetApp()" class="text-gray-500 hover:text-primary underline text-sm font-bold"><i class="fa-solid fa-rotate-left mr-1"></i> 最初からやり直す</button>
+                    </div>
+                </div>
+
+                <!-- 右カラム：スマホデモ -->
+                <div class="w-full md:w-auto flex justify-center">
+                    <div class="smartphone-frame">
+                        <div class="demo-screen relative">
+                            <!-- デモヘッダー -->
+                            <div class="bg-white px-4 pt-10 pb-3 shadow-sm sticky top-0 z-30 flex justify-between items-center">
+                                <div id="demoLogo" class="font-bold text-lg text-primary"></div>
+                                <i class="fa-solid fa-bars text-gray-600 text-xl"></i>
+                            </div>
+
+                            <!-- ヒーロー画像 (編集可能要素) -->
+                            <div class="editable-element relative">
+                                <img id="demoHeroImg" src="" alt="Hero Image" class="w-full h-48 object-cover">
+                                <div class="absolute inset-0 bg-black bg-opacity-30 flex flex-col justify-center items-center text-white p-4 text-center">
+                                    <h2 id="demoCatchphrase" class="text-2xl font-bold mb-2 shadow-sm"></h2>
+                                </div>
+                            </div>
+
+                            <!-- メインコンテンツ -->
+                            <div class="p-5">
+                                <div class="editable-element bg-white p-4 rounded-xl shadow-sm mb-4">
+                                    <h3 class="text-xs text-gray-500 font-bold mb-1">最新のお知らせ</h3>
+                                    <p class="text-sm text-gray-800">営業時間を更新しました。感染症対策を万全にして皆様をお待ちしております。</p>
+                                </div>
+
+                                <h3 class="font-bold text-primary mb-3 ml-1 mt-6">おすすめコンテンツ</h3>
+                                <div class="grid grid-cols-2 gap-3 mb-6">
+                                    <div class="editable-element bg-white rounded-lg shadow-sm overflow-hidden">
+                                        <div class="h-24 bg-gray-200">
+                                            <img id="demoSubImg1" src="" class="w-full h-full object-cover">
+                                        </div>
+                                        <div class="p-2 text-xs font-bold text-center text-gray-700">サービス詳細</div>
+                                    </div>
+                                    <div class="editable-element bg-white rounded-lg shadow-sm overflow-hidden">
+                                        <div class="h-24 bg-gray-200">
+                                            <img id="demoSubImg2" src="" class="w-full h-full object-cover">
+                                        </div>
+                                        <div class="p-2 text-xs font-bold text-center text-gray-700">お客様の声</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="mt-8 mb-10">
+                                    <a href="#" class="block w-full bg-accent text-white text-center font-bold py-4 rounded-full shadow-md flex items-center justify-center">
+                                        <i class="fa-solid fa-phone mr-2"></i> お問い合わせはこちら
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </main>
+
+    <!-- ==========================================
+         モーダル＆トーストコンポーネント
+    =========================================== -->
+    
+    <!-- 使い方モーダル -->
+    <div id="howtoModal" class="fixed inset-0 z-50 flex items-center justify-center hidden">
+        <div class="absolute inset-0 modal-backdrop" onclick="closeModal('howtoModal')"></div>
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl relative z-10 transform scale-95 opacity-0 transition-all duration-300 flex flex-col max-h-[90vh]">
+            <div class="bg-primary text-white px-6 py-4 flex justify-between items-center rounded-t-2xl">
+                <h3 class="font-bold text-lg"><i class="fa-solid fa-circle-question mr-2"></i>アプリの目的と使い方</h3>
+                <button onclick="closeModal('howtoModal')" class="text-white/80 hover:text-white transition"><i class="fa-solid fa-xmark text-2xl"></i></button>
+            </div>
+            <div class="p-6 md:p-8 overflow-y-auto">
+                <div class="mb-6">
+                    <h4 class="font-bold text-secondary border-b-2 border-blue-100 pb-2 mb-3 text-lg flex items-center"><i class="fa-solid fa-bullseye mr-2"></i> アプリの目的</h4>
+                    <p class="text-gray-700 leading-relaxed bg-blue-50 p-4 rounded-xl">
+                        IT知識のない新人営業マンでも、顧客のサイトを分析し、適切なヒアリングと営業トークを行い、AIの強みと著作権的に安全なデモサイトをその場で提示し、リプレイス提案を成功させること。
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-secondary border-b-2 border-blue-100 pb-2 mb-4 text-lg flex items-center"><i class="fa-solid fa-list-check mr-2"></i> 使い方（4ステップ営業フロー）</h4>
+                    <ul class="space-y-4">
+                        <li class="flex items-start bg-slate-50 p-3 rounded-xl border border-slate-100">
+                            <span class="bg-secondary text-white font-bold rounded-full w-6 h-6 flex items-center justify-center mr-3 shrink-0 shadow-md text-sm">1</span>
+                            <div>
+                                <strong class="text-gray-800">診断画面</strong><br>
+                                <span class="text-gray-600 text-xs mt-1 block">既存URLと業種を入力し「診断する」をタップ。</span>
+                            </div>
+                        </li>
+                        <li class="flex items-start bg-slate-50 p-3 rounded-xl border border-slate-100">
+                            <span class="bg-secondary text-white font-bold rounded-full w-6 h-6 flex items-center justify-center mr-3 shrink-0 shadow-md text-sm">2</span>
+                            <div>
+                                <strong class="text-gray-800">リスク提示トーク</strong><br>
+                                <span class="text-gray-600 text-xs mt-1 block">「危険」の警告を見せ、被害額73万円や保守自動化のトークを読み上げます。</span>
+                            </div>
+                        </li>
+                        <li class="flex items-start bg-slate-50 p-3 rounded-xl border border-slate-100">
+                            <span class="bg-secondary text-white font-bold rounded-full w-6 h-6 flex items-center justify-center mr-3 shrink-0 shadow-md text-sm">3</span>
+                            <div>
+                                <strong class="text-gray-800">AIライティング提案</strong><br>
+                                <span class="text-gray-600 text-xs mt-1 block">文字数の多い古い文章が、スマホに最適な文字数に再構成される様子を見せます。</span>
+                            </div>
+                        </li>
+                        <li class="flex items-start bg-slate-50 p-3 rounded-xl border border-slate-100">
+                            <span class="bg-secondary text-white font-bold rounded-full w-6 h-6 flex items-center justify-center mr-3 shrink-0 shadow-md text-sm">4</span>
+                            <div>
+                                <strong class="text-gray-800">デモサイト提示</strong><br>
+                                <span class="text-gray-600 text-xs mt-1 block">完成したデモを見せ、「見たまま編集」を疑似体験させます。</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="bg-gray-100 px-6 py-4 border-t flex justify-end rounded-b-2xl">
+                <button onclick="closeModal('howtoModal')" class="bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-6 rounded-lg transition">閉じる</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 設定モーダル -->
+    <div id="settingsModal" class="fixed inset-0 z-50 flex items-center justify-center hidden">
+        <div class="absolute inset-0 modal-backdrop" onclick="closeModal('settingsModal')"></div>
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md relative z-10 transform scale-95 opacity-0 transition-all duration-300">
+            <div class="bg-primary text-white px-6 py-4 flex justify-between items-center rounded-t-2xl">
+                <h3 class="font-bold text-lg"><i class="fa-solid fa-gear mr-2"></i>設定・デモ準備</h3>
+                <button onclick="closeModal('settingsModal')" class="text-white/80 hover:text-white transition"><i class="fa-solid fa-xmark text-2xl"></i></button>
+            </div>
+            <div class="p-6">
+                <p class="text-sm text-gray-600 mb-6">商談のロールプレイング（練習）用に、ダミーのURLを自動入力したり、入力内容をクリアしたりできます。</p>
+                <div class="space-y-4">
+                    <button onclick="fillDemoData()" class="w-full bg-blue-50 hover:bg-blue-100 text-secondary border border-blue-200 font-bold py-3 px-4 rounded-xl transition flex items-center justify-center">
+                        <i class="fa-solid fa-wand-magic-sparkles mr-2"></i> デモURLを自動入力
+                    </button>
+                    <button onclick="clearDemoData()" class="w-full bg-red-50 hover:bg-red-100 text-danger border border-red-200 font-bold py-3 px-4 rounded-xl transition flex items-center justify-center">
+                        <i class="fa-solid fa-eraser mr-2"></i> 入力内容をクリア
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- トースト通知 -->
+    <div id="toast" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50 bg-gray-800 text-white px-6 py-3 rounded-full shadow-lg flex items-center">
+        <i id="toastIcon" class="fa-solid mr-2"></i>
+        <span id="toastMessage" class="font-medium"></span>
+    </div>
+
+    <script>
+        const industryData = {
+            'restaurant': { 
+                name: 'Cafe & Restaurant', 
+                oldText: '当店は1998年の創業以来、地元の皆様に愛される味を守り続けてまいりました。特に素材にはこだわっており、毎朝市場で仕入れる新鮮な野菜と、契約農家から直接買い付けるお肉を使用しております。ご家族連れからカップルまで、幅広いお客様に楽しんでいただけるよう、豊富なメニューを取り揃えておりますので、ぜひ一度ご来店ください。皆様のお越しを心よりお待ち申し上げております。',
+                newCatch: 'こだわりの味を、心地よい空間で。',
+                newSub: '毎朝仕入れる新鮮素材で、特別なひとときを。',
+                newDesc: '1998年創業。厳選された新鮮な野菜と契約農家直送のお肉を使用した、体に優しいメニューが自慢です。ご家族や大切な方と、心安らぐ時間をお過ごしください。',
+                hero: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=400&q=80',
+                sub1: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=200&q=80',
+                sub2: 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=200&q=80'
+            },
+            'construction': { 
+                name: '鈴木工務店', 
+                oldText: '弊社は長年にわたり地域密着型で建築全般、リフォーム工事、内装工事などを請け負ってまいりました。お客様のご要望を第一に考え、熟練の職人が確かな技術で施工いたします。水回りの小さなトラブルから、大規模なリノベーションまで、どんなことでもお気軽にご相談ください。見積もりは無料で行っております。安心と信頼の施工をお約束いたします。',
+                newCatch: '理想の住まいを、共に形にする。',
+                newSub: '熟練の技術と地域密着の安心感で、暮らしを豊かに。',
+                newDesc: '水回りの小さな修理からフルリノベーションまで対応。お客様のライフスタイルに合わせた最適なご提案と、確かな技術力で、長く愛せる住まいづくりをサポートします。',
+                hero: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=400&q=80',
+                sub1: 'https://images.unsplash.com/photo-1581094288338-2314dddb7ece?auto=format&fit=crop&w=200&q=80',
+                sub2: 'https://images.unsplash.com/photo-1524813686514-a57563d77965?auto=format&fit=crop&w=200&q=80'
+            },
+            'salon': { 
+                name: 'Hair Salon ルミナス', 
+                oldText: '当サロンでは、お客様一人ひとりの髪質や骨格に合わせたカウンセリングを行い、魅力を最大限に引き出すスタイルのご提案をしております。最新のトリートメントメニューも導入しており、ダメージヘアでお悩みの方にもご好評いただいております。アットホームな雰囲気の中で、リラックスした時間をお過ごしください。完全予約制となっておりますので、お電話にてご予約をお願いいたします。',
+                newCatch: 'あなただけの美しさを引き出す。',
+                newSub: '丁寧なカウンセリングと最新ケアで、理想の髪へ。',
+                newDesc: '髪質や骨格に合わせた似合わせカットと、ダメージを修復する最新トリートメントが人気。日常の疲れを癒やすプライベート空間で、最高のスタイルをご提案します。',
+                hero: 'https://images.unsplash.com/photo-1521590832167-7bfc17484d20?auto=format&fit=crop&w=400&q=80',
+                sub1: 'https://images.unsplash.com/photo-1562322140-8baeececf3df?auto=format&fit=crop&w=200&q=80',
+                sub2: 'https://images.unsplash.com/photo-1595476108010-b4d1f10d5e43?auto=format&fit=crop&w=200&q=80'
+            },
+            'professional': { 
+                name: '山田総合法律事務所', 
+                oldText: '当事務所は、企業法務から個人の法律相談まで、幅広い分野を取り扱っております。複雑化する現代社会において、法的トラブルはいつ誰に降りかかるかわかりません。私たちは依頼者様の立場に立ち、親身になって解決策を模索し、最良の結果を導き出すよう尽力いたします。初回相談は30分無料で行っておりますので、一人で悩まずに、まずは専門家である私たちにお気軽にご相談ください。',
+                newCatch: '確かな実績で、あなたのビジネスを支援。',
+                newSub: '企業法務から個人相談まで、迅速かつ的確に解決へ導きます。',
+                newDesc: '複雑な法的トラブルも、経験豊富な専門家が親身にサポート。ご依頼者様の利益を第一に考え、最良の解決策をご提案します。初回相談無料ですのでお気軽にどうぞ。',
+                hero: 'https://images.unsplash.com/photo-1450101499163-c8848c66cb85?auto=format&fit=crop&w=400&q=80',
+                sub1: 'https://images.unsplash.com/photo-1556761175-4b46a572b786?auto=format&fit=crop&w=200&q=80',
+                sub2: 'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=200&q=80'
+            },
+            'other': { 
+                name: '株式会社ネクスト', 
+                oldText: '私たちは「テクノロジーで社会をより良くする」という理念のもと、革新的なITソリューションを提供している企業です。常に変化する市場ニーズを捉え、最新の技術を駆使して、クライアント企業の課題解決と成長をサポートしています。システム開発、コンサルティング、運用保守までワンストップで対応可能です。これからも常に挑戦し続け、価値あるサービスを創造してまいります。',
+                newCatch: '未来を創造するイノベーション。',
+                newSub: '最新テクノロジーで、ビジネスの課題を劇的に解決します。',
+                newDesc: 'システム開発から運用保守までワンストップで対応。市場の変化に柔軟に対応し、貴社の成長を加速させる最適なITソリューションを提供します。',
+                hero: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=400&q=80',
+                sub1: 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=200&q=80',
+                sub2: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=200&q=80'
+            }
+        };
+
+        const steps = ['step1', 'loading', 'step2', 'step3', 'step4'];
+
+        function showStep(targetId) {
+            steps.forEach(id => {
+                const el = document.getElementById(id);
+                el.classList.add('hidden-step');
+                el.classList.remove('fade-in');
+            });
+            const targetEl = document.getElementById(targetId);
+            targetEl.classList.remove('hidden-step');
+            if(targetId !== 'loading') {
+                targetEl.classList.add('fade-in');
+            }
+        }
+
+        function setupDemoData(industryKey) {
+            const data = industryData[industryKey] || industryData['other'];
+            
+            // AIライティング画面の反映
+            document.getElementById('demoOldText').innerText = data.oldText;
+            document.getElementById('demoNewCatch').innerText = data.newCatch;
+            document.getElementById('demoNewSub').innerText = data.newSub;
+            document.getElementById('demoNewDesc').innerText = data.newDesc;
+            
+            document.getElementById('charCountCatch').innerText = data.newCatch.length + '文字';
+            document.getElementById('charCountSub').innerText = data.newSub.length + '文字';
+            document.getElementById('charCountDesc').innerText = data.newDesc.length + '文字';
+
+            // スマホデモ画面の反映
+            document.getElementById('demoLogo').innerText = data.name;
+            document.getElementById('demoCatchphrase').innerText = data.newCatch;
+            document.getElementById('demoHeroImg').src = data.hero;
+            document.getElementById('demoSubImg1').src = data.sub1;
+            document.getElementById('demoSubImg2').src = data.sub2;
+        }
+
+        function startDiagnosis() {
+            const urlInput = document.getElementById('targetUrl').value;
+            if (!urlInput) return;
+
+            const industryKey = document.getElementById('industrySelect').value;
+            setupDemoData(industryKey);
+
+            showStep('loading');
+
+            const loadingText = document.querySelector('.loading-text');
+            setTimeout(() => { loadingText.innerText = 'プラグインの脆弱性をスキャン中...'; }, 1000);
+            setTimeout(() => { loadingText.innerText = 'サーバーの応答速度を計測中...'; }, 2000);
+
+            setTimeout(() => {
+                showStep('step2');
+            }, 3000);
+        }
+
+        function resetApp() {
+            document.getElementById('diagnosisForm').reset();
+            showStep('step1');
+        }
+
+        function openModal(id) {
+            const modal = document.getElementById(id);
+            modal.classList.remove('hidden');
+            // 少し遅延させてからopacityとscaleを変更しアニメーションさせる
+            setTimeout(() => {
+                modal.querySelector('div:last-child').classList.remove('scale-95', 'opacity-0');
+                modal.querySelector('div:last-child').classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+
+        function closeModal(id) {
+            const modal = document.getElementById(id);
+            modal.querySelector('div:last-child').classList.remove('scale-100', 'opacity-100');
+            modal.querySelector('div:last-child').classList.add('scale-95', 'opacity-0');
+            // アニメーション完了後に非表示にする
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        function showToast(message, iconClass, isError = false) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMessage').innerText = message;
+            const icon = document.getElementById('toastIcon');
+            icon.className = `fa-solid ${iconClass} mr-2`;
+            
+            toast.className = `fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50 px-6 py-3 rounded-full shadow-lg flex items-center transition-all duration-300 ${isError ? 'bg-red-600' : 'bg-green-600'} text-white`;
+            
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        function fillDemoData() {
+            document.getElementById('targetUrl').value = 'https://demo-company.co.jp';
+            document.getElementById('industrySelect').value = 'construction';
+            closeModal('settingsModal');
+            showToast('練習用のデモデータをセットしました', 'fa-check');
+        }
+
+        function clearDemoData() {
+            document.getElementById('targetUrl').value = '';
+            document.getElementById('industrySelect').value = 'restaurant';
+            closeModal('settingsModal');
+            showToast('入力内容をクリアしました', 'fa-eraser', true);
+        }
+    </script>
+</body>
+</html>
