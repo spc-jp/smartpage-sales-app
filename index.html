@@ -168,7 +168,7 @@
             </div>
         </div>
 
-        <!-- STEP 2: ヒアリング＆トーク画面 (レポート形式化・ボリュームアップ) -->
+        <!-- STEP 2: ヒアリング＆トーク画面 -->
         <div id="step2" class="w-full max-w-6xl bg-white rounded-2xl shadow-xl overflow-hidden hidden-step border border-gray-100 mb-8">
             <div class="bg-red-50 border-b-4 border-danger p-6 text-center">
                 <div class="inline-flex items-center justify-center w-16 h-16 bg-red-100 rounded-full mb-3 text-danger shadow-sm">
@@ -179,7 +179,7 @@
             </div>
             
             <div class="p-8 md:p-12">
-                <!-- 診断レポート部分（チャートと具体的な課題） -->
+                <!-- 診断レポート部分 -->
                 <div class="flex flex-col lg:flex-row gap-8 mb-10">
                     <!-- 左：レーダーチャート -->
                     <div class="w-full lg:w-1/3 flex flex-col items-center">
@@ -307,32 +307,119 @@
             </div>
         </div>
 
-        <!-- STEP 4: Smartpageのご提案（スクショ画面） -->
+        <!-- STEP 4: Smartpageのご提案（HTML再現版のご提案書） -->
         <div id="step4" class="w-full max-w-6xl bg-white rounded-2xl shadow-xl overflow-hidden hidden-step border border-gray-100 mb-8">
             <div class="p-8 md:p-12">
-                <div class="text-center mb-8">
-                    <h2 class="text-3xl font-bold text-primary mb-4">WordPressの「放置」を卒業！</h2>
-                    <p class="text-gray-600 text-lg">Smartpageで実現する中小企業のWeb安全・時短戦略</p>
-                </div>
                 
-                <!-- スライド（スクショ）画像 -->
-                <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 cursor-pointer hover:shadow-md transition relative group" onclick="openModal('proposalImageModal')">
-                    <img src="./スマートページご提案書.png" alt="Smartpageご提案書" class="w-full rounded-lg shadow-sm" onerror="this.onerror=null; this.src='data:image/svg+xml;charset=utf-8,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'1200\' height=\'675\'%3E%3Crect width=\'100%25\' height=\'100%25\' fill=\'%23f1f5f9\'/%3E%3Ctext x=\'50%25\' y=\'45%25\' font-family=\'sans-serif\' font-size=\'36\' font-weight=\'bold\' fill=\'%23475569\' text-anchor=\'middle\'%3Eプレビューでは画像が表示されません%3C/text%3E%3Ctext x=\'50%25\' y=\'55%25\' font-family=\'sans-serif\' font-size=\'24\' fill=\'%2364748b\' text-anchor=\'middle\'%3EHTMLファイルと同じフォルダに「スマートページご提案書.png」を配置してください%3C/text%3E%3C/svg%3E';">
-                    <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition rounded-xl flex items-center justify-center">
-                        <div class="bg-white text-primary font-bold px-6 py-3 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition transform translate-y-2 group-hover:translate-y-0 text-lg">
-                            <i class="fa-solid fa-magnifying-glass-plus mr-2"></i> スライドを全画面で見る
+                <!-- ご提案書レイアウト開始 -->
+                <div class="bg-slate-50 rounded-2xl p-6 md:p-8 border border-slate-200 shadow-inner">
+                    <div class="text-center mb-10 border-b-2 border-primary pb-6">
+                        <h2 class="text-2xl md:text-3xl font-bold text-primary mb-2">WordPressの「放置」を卒業！</h2>
+                        <p class="text-gray-700 md:text-xl font-bold">Smartpageで実現する中小企業のWeb安全・時短戦略</p>
+                    </div>
+
+                    <div class="flex flex-col md:flex-row gap-6 mb-8">
+                        <!-- 左：課題 -->
+                        <div class="flex-1 bg-red-50 rounded-xl p-6 md:p-8 border border-red-100 relative overflow-hidden">
+                            <!-- 背景装飾 -->
+                            <div class="absolute -right-4 -top-4 text-red-100 opacity-50 text-9xl pointer-events-none"><i class="fa-brands fa-wordpress"></i></div>
+                            
+                            <h3 class="font-bold text-danger text-lg md:text-xl mb-6 border-b border-red-200 pb-2 relative z-10">WordPressに潜む「放置」の代償 <span class="text-sm font-normal">(現状の課題)</span></h3>
+                            
+                            <div class="space-y-8 relative z-10">
+                                <div class="flex gap-4">
+                                    <div class="w-16 h-16 rounded-full bg-white flex items-center justify-center text-danger text-3xl font-bold shadow-sm shrink-0 border border-red-100">
+                                        <i class="fa-solid fa-stopwatch text-gray-700 absolute text-sm -ml-8 -mt-6"></i>
+                                        <i class="fa-solid fa-triangle-exclamation text-danger absolute text-sm ml-8 -mt-6"></i>
+                                        <span class="text-xl">73</span><span class="text-sm mt-1">万</span>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-gray-800 mb-1 text-lg">サイバー被害の平均額は「73万円」</h4>
+                                        <p class="text-sm text-gray-600 leading-relaxed">専任担当者不在によるアップデート放置が、高額な損害を招く時限爆弾となっています。</p>
+                                    </div>
+                                </div>
+                                <div class="flex gap-4">
+                                    <div class="w-16 h-16 rounded-full bg-white flex items-center justify-center text-gray-500 text-2xl shadow-sm shrink-0 border border-red-100">
+                                        <i class="fa-solid fa-desktop"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-gray-800 mb-1 text-lg">複雑な管理画面による「機会損失」</h4>
+                                        <p class="text-sm text-gray-600 leading-relaxed">パソコン操作の難しさが更新を妨げ、集客チャンスを逃す古いサイトのまま放置されています。</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 右：解決策 -->
+                        <div class="flex-1 bg-blue-50 rounded-xl p-6 md:p-8 border border-blue-100 relative overflow-hidden">
+                            <!-- 背景装飾 -->
+                            <div class="absolute -right-4 -bottom-4 text-blue-100 opacity-50 text-9xl pointer-events-none"><i class="fa-solid fa-shield-halved"></i></div>
+
+                            <h3 class="font-bold text-secondary text-lg md:text-xl mb-6 border-b border-blue-200 pb-2 relative z-10">Smartpageが実現する「攻め」の運用 <span class="text-sm font-normal">(解決策)</span></h3>
+                            
+                            <div class="space-y-6 relative z-10">
+                                <div class="flex gap-4 items-start">
+                                    <div class="w-12 h-12 rounded-lg bg-white flex items-center justify-center text-blue-500 text-xl shadow-sm shrink-0 border border-blue-100">
+                                        <i class="fa-solid fa-cloud"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-gray-800 mb-1">保守管理ゼロの「強固なクラウド環境」</h4>
+                                        <p class="text-sm text-gray-600 leading-relaxed">システム更新は運営側が自動実施。顧客は保守の負担とリスクから解放されます。</p>
+                                    </div>
+                                </div>
+                                <div class="flex gap-4 items-start">
+                                    <div class="w-12 h-12 rounded-lg bg-white flex items-center justify-center text-blue-500 text-xl shadow-sm shrink-0 border border-blue-100">
+                                        <i class="fa-solid fa-rocket"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-gray-800 mb-1">AI×テンプレートによる「爆速移行」</h4>
+                                        <p class="text-sm text-gray-600 leading-relaxed">業種別雛形とAIライティングを活用し、既存サイトを現代的な構成へ瞬時に刷新します。</p>
+                                    </div>
+                                </div>
+                                <div class="flex gap-4 items-start">
+                                    <div class="w-12 h-12 rounded-lg bg-white flex items-center justify-center text-blue-500 text-xl shadow-sm shrink-0 border border-blue-100">
+                                        <i class="fa-solid fa-arrow-trend-up"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-gray-800 mb-1">SEO評価を安全に引き継ぐ「301設定」</h4>
+                                        <p class="text-sm text-gray-600 leading-relaxed">移行後も検索順位を落とさないよう、Google推奨の手法でURLを適切にマッピングします。</p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="mt-8 bg-blue-50 p-6 rounded-xl border-l-4 border-secondary text-gray-700">
-                    <p class="font-bold text-primary mb-2"><i class="fa-solid fa-lightbulb text-accent mr-2"></i> 上記資料のポイント</p>
-                    <ul class="list-disc list-inside space-y-2 ml-4 text-sm">
-                        <li>保守管理ゼロの<strong>「強固なクラウド環境」</strong>で脆弱性リスクから解放。</li>
-                        <li>PC不要、スマホで<strong>「見たまま」直感編集</strong>で集客機会の損失を防ぐ。</li>
-                        <li>SEO評価を安全に引き継ぐ<strong>「301設定」</strong>。</li>
-                    </ul>
+                    <!-- 比較表 -->
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr>
+                                    <th class="bg-slate-100 p-4 border-b border-r text-gray-700 font-bold w-1/4 text-center">比較項目</th>
+                                    <th class="bg-gray-500 text-white p-4 border-b border-r font-bold w-3/8 text-center"><i class="fa-solid fa-xmark mr-1"></i> 従来のWordPress</th>
+                                    <th class="bg-teal-500 text-white p-4 border-b font-bold w-3/8 text-center"><i class="fa-solid fa-check mr-1"></i> Smartpage</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-sm md:text-base">
+                                <tr>
+                                    <td class="p-4 border-b border-r bg-blue-50 font-bold text-primary flex items-center"><span class="bg-secondary text-white w-5 h-5 rounded-full flex items-center justify-center text-xs mr-2 shrink-0">1</span> セキュリティ対策</td>
+                                    <td class="p-4 border-b border-r text-danger font-bold text-center">ユーザー自身で<br>更新が必要 <span class="text-xs bg-red-100 px-2 py-0.5 rounded-full block mt-1 w-max mx-auto">(危険)</span></td>
+                                    <td class="p-4 border-b text-teal-600 font-bold text-center flex flex-col items-center justify-center h-full"><i class="fa-solid fa-arrows-rotate mb-1 text-lg"></i>システム側で<br>自動更新 <span class="text-xs bg-teal-50 px-2 py-0.5 rounded-full block mt-1">(安全)</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-4 border-b border-r bg-blue-50 font-bold text-primary flex items-center"><span class="bg-secondary text-white w-5 h-5 rounded-full flex items-center justify-center text-xs mr-2 shrink-0">2</span> 更新作業</td>
+                                    <td class="p-4 border-b border-r text-gray-700 font-bold text-center">PCでの複雑な操作</td>
+                                    <td class="p-4 border-b text-teal-600 font-bold text-center flex flex-col items-center justify-center h-full"><i class="fa-solid fa-mobile-screen-button mb-1 text-lg"></i>スマホで<br>「見たまま」直感編集</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-4 border-r bg-blue-50 font-bold text-primary flex items-center"><span class="bg-secondary text-white w-5 h-5 rounded-full flex items-center justify-center text-xs mr-2 shrink-0">3</span> 費用構造</td>
+                                    <td class="p-4 border-r text-gray-700 font-bold text-center">保守・サーバー別、<br>修復は高額</td>
+                                    <td class="p-4 text-teal-600 font-bold text-center flex flex-col items-center justify-center h-full"><i class="fa-solid fa-coins mb-1 text-lg"></i>全てコミコミの<br>定額料金</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
+                <!-- ご提案書レイアウト終了 -->
 
                 <div class="mt-10 text-center">
                     <button onclick="showStep('step5')" class="bg-primary hover:bg-blue-900 text-white font-bold py-4 px-10 rounded-xl shadow-lg transform transition hover:-translate-y-1 text-lg flex items-center justify-center mx-auto">
@@ -433,578 +520,4 @@
                             </div>
                             <div class="timeline-item relative">
                                 <div class="absolute -left-[35px] top-1 bg-gray-300 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ring-4 ring-white">2</div>
-                                <h4 class="font-bold text-gray-800 flex items-center">AIによる新サイト仮構築 <span class="ml-2 text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded">最短3日</span></h4>
-                                <p class="text-sm text-gray-500 mt-1">当社のAIが最適な構成でデモ環境を構築し、ご確認いただきます。</p>
-                            </div>
-                            <div class="timeline-item relative">
-                                <div class="absolute -left-[35px] top-1 bg-gray-300 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ring-4 ring-white">3</div>
-                                <h4 class="font-bold text-gray-800 flex items-center">301設定・本公開 <span class="ml-2 text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded">最短1週間</span></h4>
-                                <p class="text-sm text-gray-500 mt-1">SEO評価を引き継ぐ設定をシステム側で行い、安全に切り替えます。</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- ご検討中の企業様へのバナーを下部に移動 -->
-            <div class="mt-12 bg-gradient-to-r from-blue-50 to-orange-50 p-8 rounded-xl border border-blue-100 shadow-md relative overflow-hidden max-w-4xl mx-auto">
-                <div class="absolute top-0 right-0 bg-accent text-white text-xs font-bold px-3 py-1 rounded-bl-lg shadow">期間限定</div>
-                <h3 class="text-xl font-bold text-primary mb-2 text-center">ご検討中の企業様へ</h3>
-                <p class="text-sm text-gray-700 mb-6 text-center">
-                    現在、AIを活用した「初期構築費」の無料キャンペーン枠をご用意しております。<br>まずは仮押さえを行い、スムーズなリプレイスの準備を始めませんか？
-                </p>
-                <div class="flex justify-center">
-                    <button onclick="openOrderModal()" class="w-full md:w-2/3 bg-accent hover:bg-orange-600 text-white font-bold py-4 rounded-xl shadow-lg transform transition hover:-translate-y-1 text-lg flex items-center justify-center">
-                        <i class="fa-solid fa-paper-plane mr-2"></i> 無料キャンペーン枠を仮押さえする
-                    </button>
-                </div>
-            </div>
-            
-            <div class="pt-6 text-center">
-                <button onclick="resetApp()" class="text-gray-400 hover:text-gray-600 underline text-sm"><i class="fa-solid fa-rotate-left mr-1"></i> 最初からやり直す</button>
-            </div>
-        </div>
-    </main>
-
-    <!-- ==========================================
-         MODALS 
-    =========================================== -->
-    
-    <!-- ご提案書画像 拡大モーダル -->
-    <div id="proposalImageModal" class="fixed inset-0 z-50 flex items-center justify-center hidden">
-        <div class="absolute inset-0 modal-backdrop" onclick="closeModal('proposalImageModal')"></div>
-        <div class="relative z-10 w-full max-w-5xl p-4 transform scale-95 opacity-0 transition-all duration-300">
-            <button onclick="closeModal('proposalImageModal')" class="absolute top-0 right-0 -mt-10 mr-4 text-white hover:text-gray-300 text-3xl transition"><i class="fa-solid fa-xmark"></i></button>
-            <img src="./スマートページご提案書.png" class="w-full rounded-xl shadow-2xl border-4 border-white" onerror="this.onerror=null; this.src='data:image/svg+xml;charset=utf-8,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'1200\' height=\'675\'%3E%3Crect width=\'100%25\' height=\'100%25\' fill=\'%23f1f5f9\'/%3E%3Ctext x=\'50%25\' y=\'45%25\' font-family=\'sans-serif\' font-size=\'36\' font-weight=\'bold\' fill=\'%23475569\' text-anchor=\'middle\'%3Eプレビューでは画像が表示されません%3C/text%3E%3Ctext x=\'50%25\' y=\'55%25\' font-family=\'sans-serif\' font-size=\'24\' fill=\'%2364748b\' text-anchor=\'middle\'%3EHTMLファイルと同じフォルダに「スマートページご提案書.png」を配置してください%3C/text%3E%3C/svg%3E';">
-        </div>
-    </div>
-
-    <!-- 使い方モーダル -->
-    <div id="howtoModal" class="fixed inset-0 z-50 flex items-center justify-center hidden">
-        <div class="absolute inset-0 modal-backdrop" onclick="closeModal('howtoModal')"></div>
-        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl relative z-10 transform scale-95 opacity-0 transition-all duration-300 flex flex-col max-h-[90vh]">
-            <div class="bg-primary text-white px-6 py-4 flex justify-between items-center rounded-t-2xl">
-                <h3 class="font-bold text-lg"><i class="fa-solid fa-circle-question mr-2"></i>アプリの目的と使い方</h3>
-                <button onclick="closeModal('howtoModal')" class="text-white/80 hover:text-white transition"><i class="fa-solid fa-xmark text-2xl"></i></button>
-            </div>
-            <div class="p-6 overflow-y-auto">
-                <div class="mb-6">
-                    <h4 class="font-bold text-secondary border-b-2 border-blue-100 pb-2 mb-3 text-lg">アプリの目的</h4>
-                    <p class="text-gray-700 bg-blue-50 p-4 rounded-xl text-sm leading-relaxed">
-                        IT知識のない新人営業マンでも、顧客のサイトを分析し、適切なヒアリングと営業トークを行い、AIの強みと著作権的に安全なデモサイトをその場で提示し、<strong>クロージング（仮申し込み）までをシームレスに成功させること。</strong>
-                    </p>
-                </div>
-                <div>
-                    <h4 class="font-bold text-secondary border-b-2 border-blue-100 pb-2 mb-4 text-lg">5ステップ営業フロー</h4>
-                    <ul class="space-y-3">
-                        <li class="flex items-start bg-slate-50 p-3 rounded-xl border border-slate-100">
-                            <span class="bg-secondary text-white font-bold rounded-full w-6 h-6 flex items-center justify-center mr-3 shrink-0 text-sm">1</span>
-                            <div>
-                                <strong class="text-gray-800 text-sm">診断（驚きの前フリ）</strong><br>
-                                <span class="text-gray-500 text-xs mt-0.5 block">既存URLと業種を入力。「ハッカー風スキャン」で期待と不安を煽ります。</span>
-                            </div>
-                        </li>
-                        <li class="flex items-start bg-slate-50 p-3 rounded-xl border border-slate-100">
-                            <span class="bg-secondary text-white font-bold rounded-full w-6 h-6 flex items-center justify-center mr-3 shrink-0 text-sm">2</span>
-                            <div>
-                                <strong class="text-gray-800 text-sm">リスク提示（課題の視覚化）</strong><br>
-                                <span class="text-gray-500 text-xs mt-0.5 block">歪なチャートと課題を提示し、被害額73万円のトークを読み上げます。</span>
-                            </div>
-                        </li>
-                        <li class="flex items-start bg-slate-50 p-3 rounded-xl border border-slate-100">
-                            <span class="bg-secondary text-white font-bold rounded-full w-6 h-6 flex items-center justify-center mr-3 shrink-0 text-sm">3</span>
-                            <div>
-                                <strong class="text-gray-800 text-sm">AIライティング（期待感の醸成）</strong><br>
-                                <span class="text-gray-500 text-xs mt-0.5 block">ライブタイピング演出で、文章がスマホ最適化される過程を見せます。</span>
-                            </div>
-                        </li>
-                        <li class="flex items-start bg-slate-50 p-3 rounded-xl border border-slate-100">
-                            <span class="bg-secondary text-white font-bold rounded-full w-6 h-6 flex items-center justify-center mr-3 shrink-0 text-sm">4</span>
-                            <div>
-                                <strong class="text-gray-800 text-sm">ご提案書提示（解決策の提示）</strong><br>
-                                <span class="text-gray-500 text-xs mt-0.5 block">スライド画像を全画面で見せ、課題に対するSmartpageの解決策を説明します。</span>
-                            </div>
-                        </li>
-                        <li class="flex items-start bg-slate-50 p-3 rounded-xl border border-slate-100">
-                            <span class="bg-secondary text-white font-bold rounded-full w-6 h-6 flex items-center justify-center mr-3 shrink-0 text-sm">5</span>
-                            <div>
-                                <strong class="text-gray-800 text-sm">編集体験＆クロージング</strong><br>
-                                <span class="text-gray-500 text-xs mt-0.5 block">デモの文字を顧客に打ち換えさせ、無料キャンペーン枠の仮申込を促します。</span>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- 設定モーダル -->
-    <div id="settingsModal" class="fixed inset-0 z-50 flex items-center justify-center hidden no-print">
-        <div class="absolute inset-0 modal-backdrop" onclick="closeModal('settingsModal')"></div>
-        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md relative z-10 transform scale-95 opacity-0 transition-all duration-300">
-            <div class="bg-gray-800 text-white px-6 py-4 flex justify-between items-center rounded-t-2xl">
-                <h3 class="font-bold text-lg"><i class="fa-solid fa-gear mr-2"></i>設定・デモ準備</h3>
-                <button onclick="closeModal('settingsModal')" class="text-white/80 hover:text-white transition"><i class="fa-solid fa-xmark text-2xl"></i></button>
-            </div>
-            <div class="p-6">
-                <div class="mb-6">
-                    <label class="block text-sm font-bold text-gray-700 mb-2">自社メールアドレス</label>
-                    <input type="email" id="salesEmail" value="sales-team@smartpage.jp" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-secondary bg-gray-50">
-                </div>
-                <div class="mb-6">
-                    <label class="block text-sm font-bold text-gray-700 mb-2">顧客メールアドレス</label>
-                    <input type="email" id="demoCustomerEmail" placeholder="デモ時に入力されるアドレス" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-secondary bg-gray-50">
-                </div>
-                <div class="space-y-3 pt-4 border-t border-gray-100">
-                    <button onclick="fillDemoData()" class="w-full bg-blue-50 hover:bg-blue-100 text-secondary border border-blue-200 font-bold py-3 rounded-xl transition flex items-center justify-center text-sm">
-                        <i class="fa-solid fa-magic-wand-sparkles mr-2"></i> ロールプレイング用データを自動入力
-                    </button>
-                    <button onclick="clearDemoData()" class="w-full bg-gray-50 hover:bg-gray-100 text-gray-600 border border-gray-200 font-bold py-3 rounded-xl transition flex items-center justify-center text-sm">
-                        <i class="fa-solid fa-eraser mr-2"></i> 入力内容をクリア
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- 仮オーダーモーダル -->
-    <div id="orderModal" class="fixed inset-0 z-50 flex items-center justify-center hidden">
-        <div class="absolute inset-0 modal-backdrop" onclick="closeModal('orderModal')"></div>
-        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-lg relative z-10 transform scale-95 opacity-0 transition-all duration-300 overflow-hidden">
-            <div class="bg-accent text-white px-6 py-4 flex justify-between items-center">
-                <h3 class="font-bold text-lg"><i class="fa-solid fa-paper-plane mr-2"></i>無料キャンペーン枠の仮押さえ</h3>
-                <button onclick="closeModal('orderModal')" class="text-white/80 hover:text-white transition"><i class="fa-solid fa-xmark text-2xl"></i></button>
-            </div>
-            
-            <div class="p-6 md:p-8" id="orderFormContainer">
-                <p class="text-sm text-gray-600 mb-6 bg-orange-50 p-3 rounded-lg border border-orange-100">
-                    仮申し込みを行います。後日、担当者より正式なご案内をさせていただきます。
-                </p>
-                <form id="orderForm" onsubmit="event.preventDefault(); submitOrder();" class="space-y-4">
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-1">貴社名 / 店舗名</label>
-                        <input type="text" id="orderName" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent outline-none bg-gray-50">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-1">現在のWebサイトURL</label>
-                        <input type="url" id="orderUrlInput" readonly class="w-full px-4 py-3 border border-gray-200 bg-gray-100 text-gray-500 rounded-lg outline-none cursor-not-allowed">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-1">ご担当者様 メールアドレス <span class="text-danger">*</span></label>
-                        <input type="email" id="customerEmail" placeholder="example@company.com" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent outline-none">
-                    </div>
-                    <div class="pt-4">
-                        <button type="submit" id="submitOrderBtn" class="w-full bg-primary hover:bg-blue-900 text-white font-bold py-4 rounded-xl shadow-md transition flex items-center justify-center text-lg">
-                            <i class="fa-solid fa-check mr-2"></i> 仮申し込みを受け付ける
-                        </button>
-                    </div>
-                </form>
-            </div>
-
-            <!-- 送信完了＆アクション選択画面 -->
-            <div class="p-6 md:p-8 text-center hidden" id="orderSuccess">
-                <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4 text-green-500 text-3xl">
-                    <i class="fa-solid fa-check"></i>
-                </div>
-                <h3 class="text-xl font-bold text-gray-800 mb-2">仮申し込みを受け付けました</h3>
-                <p class="text-gray-600 mb-6 text-sm">
-                    本日のご提案内容（診断結果やAI作成案）を自社メールアドレスおよび顧客メールアドレスに送信します。
-                </p>
-                
-                <div class="space-y-3">
-                    <button onclick="openSendMethodModal()" class="w-full bg-secondary hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-xl transition flex items-center justify-center shadow-md">
-                        <i class="fa-solid fa-envelope mr-2"></i> 自社・顧客へメールを送る
-                    </button>
-                </div>
-
-                <button onclick="closeModal('orderModal'); resetApp();" class="mt-6 text-gray-400 hover:text-gray-600 text-sm underline">
-                    最初の画面へ戻る
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- 送信方法選択モーダル -->
-    <div id="sendMethodModal" class="fixed inset-0 z-50 flex items-center justify-center hidden">
-        <div class="absolute inset-0 modal-backdrop" onclick="closeModal('sendMethodModal')"></div>
-        <div class="bg-white rounded-[24px] shadow-2xl w-full max-w-lg relative z-10 transform scale-95 opacity-0 transition-all duration-300 p-8">
-            <button onclick="closeModal('sendMethodModal')" class="absolute top-5 right-5 text-gray-400 hover:text-gray-600 text-xl"><i class="fa-solid fa-xmark"></i></button>
-            
-            <h2 class="text-2xl font-bold text-center text-gray-800 mb-8">送信方法を選んでください</h2>
-            
-            <button onclick="sendViaMailer()" class="flex items-center p-4 border border-gray-200 rounded-2xl mb-4 hover:border-blue-400 hover:bg-blue-50 w-full text-left transition group">
-                <div class="w-14 h-14 bg-blue-50 text-blue-500 rounded-full flex items-center justify-center mr-5 text-2xl group-hover:bg-white border border-blue-100">
-                    <i class="fa-regular fa-envelope"></i>
-                </div>
-                <div>
-                    <div class="font-bold text-gray-800 text-lg">メールソフトで送る</div>
-                    <div class="text-sm text-gray-500 mt-1">Outlook, Macメールなど設定済みの方</div>
-                </div>
-            </button>
-            
-            <button onclick="sendViaGmail()" class="flex items-center p-4 border border-gray-200 rounded-2xl mb-8 hover:border-red-400 hover:bg-red-50 w-full text-left transition group">
-                <div class="w-14 h-14 bg-red-50 text-red-500 rounded-full flex items-center justify-center mr-5 text-2xl group-hover:bg-white border border-red-100">
-                    <i class="fa-regular fa-envelope-open"></i>
-                </div>
-                <div>
-                    <div class="font-bold text-gray-800 text-lg">Gmailで送る</div>
-                    <div class="text-sm text-gray-500 mt-1">ブラウザでGmailをお使いの方</div>
-                </div>
-            </button>
-
-            <h3 class="text-base font-bold text-gray-700 mb-3">うまくいかない場合は...</h3>
-            <div class="bg-gray-50 p-5 rounded-2xl border border-gray-200">
-                <p class="text-sm text-gray-600 mb-3">
-                    以下の本文をコピーして、使い慣れたメール等の本文に貼り付けて<br>
-                    <span id="displaySalesEmail" class="font-bold text-gray-800"></span> までお送りください。
-                </p>
-                <textarea id="copyTextarea" readonly class="w-full h-32 border border-gray-300 rounded-xl p-3 text-sm mb-3 bg-white outline-none resize-none text-gray-700"></textarea>
-                <button onclick="copyMailText()" id="copyBtn" class="w-full bg-blue-50 hover:bg-blue-100 border border-blue-200 text-blue-700 font-bold py-3 rounded-xl transition flex items-center justify-center">
-                    本文をコピーする
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        const industryData = {
-            'restaurant': { 
-                name: 'Cafe & Restaurant', 
-                oldText: '当店は1998年の創業以来、地元の皆様に愛される味を守り続けてまいりました。特に素材にはこだわっており、毎朝市場で仕入れる新鮮な野菜と、契約農家から直接買い付けるお肉を使用しております。ご家族連れからカップルまで、幅広いお客様に楽しんでいただけるよう、豊富なメニューを取り揃えておりますので、ぜひ一度ご来店ください。皆様のお越しを心よりお待ち申し上げております。',
-                newCatch: 'こだわりの味を、心地よい空間で。',
-                newSub: '毎朝仕入れる新鮮素材で、特別なひとときを。',
-                newDesc: '1998年創業。厳選された新鮮な野菜と契約農家直送のお肉を使用した、体に優しいメニューが自慢です。ご家族や大切な方と、心安らぐ時間をお過ごしください。',
-                hero: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80',
-                sub1: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=200&q=80',
-                sub2: 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=200&q=80'
-            },
-            'construction': { 
-                name: '鈴木建設工業', 
-                oldText: '弊社は長年にわたり地域密着型で建築全般、土木工事、リフォーム工事などを請け負ってまいりました。安全第一をモットーに、熟練の職人が確かな技術で施工いたします。公共事業から一般住宅の大規模なリノベーションまで、どんなことでもご相談ください。見積もりは無料で行っております。安心と信頼の施工をお約束いたします。',
-                newCatch: '確かな技術で、地域の基盤を創る。',
-                newSub: '長年の実績と信頼。安全を第一に、最適な施工をお届けします。',
-                newDesc: '公共事業から住宅リノベーションまで幅広く対応。熟練の技術と徹底した安全管理で、お客様の多様なニーズに応える高品質な施工を実現します。',
-                hero: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=800&q=80',
-                sub1: 'https://images.unsplash.com/photo-1581094288338-2314dddb7ece?auto=format&fit=crop&w=200&q=80',
-                sub2: 'https://images.unsplash.com/photo-1541888086425-d81bb19240f5?auto=format&fit=crop&w=200&q=80'
-            },
-            'manufacturing': { 
-                name: '株式会社 ヤマダ製作所', 
-                oldText: '当社は昭和の創業以来、金属の精密部品の切削加工を主業としてまいりました。職人の長年の経験と勘による高品質な製品づくりには定評があり、多くのお客様から信頼をいただいております。近年は最新のNC旋盤やマシニングセンタも導入し、多品種少量生産から量産まで幅広く対応可能です。お見積もりや図面のご相談など、お気軽にお問い合わせください。',
-                newCatch: '精密加工の極み、日本のモノづくりを支える。',
-                newSub: '熟練の技と最新設備の融合で、あらゆるニーズに応えます。',
-                newDesc: '長年培った職人の技術と最新のNC工作機械を駆使し、高品質な精密部品を短納期でご提供。試作品から量産まで、ワンストップで柔軟に対応いたします。',
-                hero: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=800&q=80',
-                sub1: 'https://images.unsplash.com/photo-1565514020179-026b92b84bb6?auto=format&fit=crop&w=200&q=80',
-                sub2: 'https://images.unsplash.com/photo-1531704253303-34e2c0e8f000?auto=format&fit=crop&w=200&q=80'
-            },
-            'wholesale': { 
-                name: 'グローバル商事株式会社', 
-                oldText: '弊社は食品・日用雑貨の総合卸売商社として、地域に根ざした事業を展開しております。全国のメーカー様から良質な商品を仕入れ、地域の小売店様、飲食店様へ迅速かつ確実にお届けすることが私たちの使命です。豊富な商品知識を持った営業担当が、お客様の売上アップに貢献するご提案をさせていただきます。新規お取引も随時募集しておりますのでご連絡ください。',
-                newCatch: '地域と全国をつなぐ、流通のベストパートナー。',
-                newSub: '豊富な品揃えと迅速な配送で、貴社のビジネス成長をサポート。',
-                newDesc: '食品から日用雑貨まで幅広い商品を網羅。単なる商品供給にとどまらず、トレンドを見据えた売り場提案で、小売店様・飲食店様の売上拡大に貢献します。',
-                hero: 'https://images.unsplash.com/photo-1586528116311-ad8ed7c83a7f?auto=format&fit=crop&w=800&q=80',
-                sub1: 'https://images.unsplash.com/photo-1553413077-190dd305871c?auto=format&fit=crop&w=200&q=80',
-                sub2: 'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=200&q=80'
-            },
-            'service': { 
-                name: 'クリーンライフサービス', 
-                oldText: '当社はハウスクリーニング、オフィス清掃、マンションの定期清掃など、生活や業務に関わるあらゆる清掃サービスを提供しています。共働き世帯の増加や高齢化社会において、私たちのサービスの需要は高まっています。スタッフの教育には特に力を入れており、礼儀正しく、丁寧な作業を徹底しております。無料でお見積りにお伺いしますので、お困りごとがあれば何でもご相談ください。',
-                newCatch: 'あなたの「困った」を、「助かった」に変える。',
-                newSub: '高品質なプロの清掃サービスで、快適な環境をお届けします。',
-                newDesc: 'ご家庭からオフィスまで、厳しい研修を受けたプロのスタッフが丁寧に対応。日々の負担を軽減し、より衛生的で快適な時間と空間を創出します。',
-                hero: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=800&q=80',
-                sub1: 'https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?auto=format&fit=crop&w=200&q=80',
-                sub2: 'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=200&q=80'
-            },
-            'salon': { 
-                name: 'Hair Salon ルミナス', 
-                oldText: '当サロンでは、お客様一人ひとりの髪質や骨格に合わせたカウンセリングを行い、魅力を最大限に引き出すスタイルのご提案をしております。最新のトリートメントメニューも導入しており、ダメージヘアでお悩みの方にもご好評いただいております。アットホームな雰囲気の中で、リラックスした時間をお過ごしください。完全予約制となっておりますので、お電話にてご予約をお願いいたします。',
-                newCatch: 'あなただけの美しさを引き出す。',
-                newSub: '丁寧なカウンセリングと最新ケアで、理想の髪へ。',
-                newDesc: '髪質や骨格に合わせた似合わせカットと、ダメージを修復する最新トリートメントが人気。日常の疲れを癒やすプライベート空間で、最高のスタイルをご提案します。',
-                hero: 'https://images.unsplash.com/photo-1521590832167-7bfc17484d20?auto=format&fit=crop&w=800&q=80',
-                sub1: 'https://images.unsplash.com/photo-1562322140-8baeececf3df?auto=format&fit=crop&w=200&q=80',
-                sub2: 'https://images.unsplash.com/photo-1595476108010-b4d1f10d5e43?auto=format&fit=crop&w=200&q=80'
-            },
-            'professional': { 
-                name: '山田総合法律事務所', 
-                oldText: '当事務所は、企業法務から個人の法律相談まで、幅広い分野を取り扱っております。複雑化する現代社会において、法的トラブルはいつ誰に降りかかるかわかりません。私たちは依頼者様の立場に立ち、親身になって解決策を模索し、最良の結果を導き出すよう尽力いたします。初回相談は30分無料で行っておりますので、一人で悩まずに、まずは専門家である私たちにお気軽にご相談ください。',
-                newCatch: '確かな実績で、あなたのビジネスを支援。',
-                newSub: '企業法務から個人相談まで、迅速かつ的確に解決へ導きます。',
-                newDesc: '複雑な法的トラブルも、経験豊富な専門家が親身にサポート。ご依頼者様の利益を第一に考え、最良の解決策をご提案します。初回相談無料ですのでお気軽にどうぞ。',
-                hero: 'https://images.unsplash.com/photo-1450101499163-c8848c66cb85?auto=format&fit=crop&w=800&q=80',
-                sub1: 'https://images.unsplash.com/photo-1556761175-4b46a572b786?auto=format&fit=crop&w=200&q=80',
-                sub2: 'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=200&q=80'
-            },
-            'other': { 
-                name: '株式会社ネクスト', 
-                oldText: '私たちは「テクノロジーで社会をより良くする」という理念のもと、革新的なITソリューションを提供している企業です。常に変化する市場ニーズを捉え、最新の技術を駆使して、クライアント企業の課題解決と成長をサポートしています。システム開発、コンサルティング、運用保守までワンストップで対応可能です。これからも常に挑戦し続け、価値あるサービスを創造してまいります。',
-                newCatch: '未来を創造するイノベーション。',
-                newSub: '最新テクノロジーで、ビジネスの課題を劇的に解決します。',
-                newDesc: 'システム開発から運用保守までワンストップで対応。市場の変化に柔軟に対応し、貴社の成長を加速させる最適なITソリューションを提供します。',
-                hero: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80',
-                sub1: 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=200&q=80',
-                sub2: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=200&q=80'
-            }
-        };
-
-        const steps = ['step1', 'loading', 'step2', 'step3', 'step4', 'step5'];
-        let myChart = null; 
-
-        // グローバル変数（送信情報保持用）
-        let currentOrderData = {};
-        window.mailSubject = "";
-        window.mailBody = "";
-        window.mailTo = "";
-
-        function showStep(targetId) {
-            steps.forEach(id => {
-                const el = document.getElementById(id);
-                el.classList.add('hidden-step');
-                el.classList.remove('fade-in');
-            });
-            const targetEl = document.getElementById(targetId);
-            targetEl.classList.remove('hidden-step');
-            if(targetId !== 'loading') targetEl.classList.add('fade-in');
-
-            if (targetId === 'step2') drawRadarChart();
-            if (targetId === 'step3') startAITyping();
-            if (targetId === 'step5') animateSchedule();
-        }
-
-        function startDiagnosis() {
-            const urlInput = document.getElementById('targetUrl').value;
-            if (!urlInput) return;
-            const industryKey = document.getElementById('industrySelect').value;
-            
-            setupDemoData(industryKey);
-            showStep('loading');
-
-            const consoleEl = document.getElementById('consoleOutput');
-            consoleEl.innerHTML = '';
-            const logs = [
-                "> INITIALIZING SCAN FOR " + urlInput + "...",
-                "> CHECKING WORDPRESS VERSION...",
-                "> WP VERSION OUTDATED (v5.2 detected)",
-                "> SCANNING PLUGINS DIRECTORY...",
-                "> WARNING: 3 VULNERABLE PLUGINS FOUND",
-                "> CHECKING PHP VERSION...",
-                "> CRITICAL: UNSUPPORTED PHP VERSION",
-                "> ANALYZING SECURITY HEADERS...",
-                "> FAILED: X-Frame-Options MISSING",
-                "> SCAN COMPLETE. GENERATING REPORT..."
-            ];
-            
-            let i = 0;
-            const logInterval = setInterval(() => {
-                if (i < logs.length) {
-                    consoleEl.innerHTML += `<div style="margin-bottom:4px; ${logs[i].includes('WARNING') || logs[i].includes('CRITICAL') ? 'color: #ef4444; font-weight:bold;' : ''}">${logs[i]}</div>`;
-                    consoleEl.scrollTop = consoleEl.scrollHeight;
-                    i++;
-                } else {
-                    clearInterval(logInterval);
-                    setTimeout(() => showStep('step2'), 800);
-                }
-            }, 300);
-        }
-
-        function setupDemoData(industryKey) {
-            const data = industryData[industryKey] || industryData['other'];
-            document.getElementById('demoOldText').innerText = data.oldText;
-            window.currentAIData = data; 
-            document.getElementById('demoLogo').innerText = data.name;
-            document.getElementById('demoCatchphrase').innerText = data.newCatch;
-            document.getElementById('demoHeroImg').src = data.hero;
-            document.getElementById('demoSubImg1').src = data.sub1;
-            document.getElementById('demoSubImg2').src = data.sub2;
-            
-            document.getElementById('orderName').value = data.name;
-            document.getElementById('orderUrlInput').value = document.getElementById('targetUrl').value;
-        }
-
-        function drawRadarChart() {
-            const ctx = document.getElementById('resultChart').getContext('2d');
-            if (myChart) myChart.destroy(); 
-            myChart = new Chart(ctx, {
-                type: 'radar',
-                data: {
-                    labels: ['デザイン性', 'コンテンツ', '使いやすさ', '表示速度', 'セキュリティ・保守'],
-                    datasets: [{
-                        label: '現状のサイト評価',
-                        data: [75, 80, 60, 40, 10], 
-                        backgroundColor: 'rgba(239, 68, 68, 0.2)', 
-                        borderColor: '#EF4444',
-                        pointBackgroundColor: '#EF4444',
-                        borderWidth: 2,
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: { r: { min: 0, max: 100, ticks: { stepSize: 20 } } },
-                    plugins: { legend: { display: false } }
-                }
-            });
-        }
-
-        function typeText(elementId, countId, text, speed, callback) {
-            const el = document.getElementById(elementId);
-            const countEl = document.getElementById(countId);
-            el.innerText = '';
-            el.classList.add('typing-cursor');
-            let i = 0;
-            function type() {
-                if (i < text.length) {
-                    el.innerText += text.charAt(i);
-                    countEl.innerText = (i + 1) + '文字';
-                    i++;
-                    setTimeout(type, speed);
-                } else {
-                    el.classList.remove('typing-cursor');
-                    if (callback) callback();
-                }
-            }
-            type();
-        }
-
-        function startAITyping() {
-            const data = window.currentAIData;
-            ['demoNewCatch', 'demoNewSub', 'demoNewDesc'].forEach(id => document.getElementById(id).innerText = '');
-            ['charCountCatch', 'charCountSub', 'charCountDesc'].forEach(id => document.getElementById(id).innerText = '0文字');
-            
-            setTimeout(() => {
-                typeText('demoNewCatch', 'charCountCatch', data.newCatch, 40, () => {
-                    document.getElementById('demoNewSub').classList.add('typing-cursor');
-                    typeText('demoNewSub', 'charCountSub', data.newSub, 30, () => {
-                        document.getElementById('demoNewDesc').classList.add('typing-cursor');
-                        typeText('demoNewDesc', 'charCountDesc', data.newDesc, 20);
-                    });
-                });
-            }, 500);
-        }
-
-        function animateSchedule() {
-            const items = document.querySelectorAll('.timeline-item');
-            items.forEach(item => item.classList.remove('show'));
-            items.forEach((item, index) => {
-                setTimeout(() => item.classList.add('show'), 300 + (index * 400));
-            });
-        }
-
-        function openModal(id) {
-            const modal = document.getElementById(id);
-            modal.classList.remove('hidden');
-            setTimeout(() => {
-                modal.querySelector('div.relative').classList.remove('scale-95', 'opacity-0');
-                modal.querySelector('div.relative').classList.add('scale-100', 'opacity-100');
-            }, 10);
-        }
-
-        function closeModal(id) {
-            const modal = document.getElementById(id);
-            const inner = modal.querySelector('div.relative');
-            inner.classList.remove('scale-100', 'opacity-100');
-            inner.classList.add('scale-95', 'opacity-0');
-            setTimeout(() => modal.classList.add('hidden'), 300);
-        }
-
-        function fillDemoData() {
-            document.getElementById('targetUrl').value = 'https://old-bakery-sample.co.jp';
-            document.getElementById('industrySelect').value = 'restaurant';
-            document.getElementById('demoCustomerEmail').value = 'info@old-bakery-sample.co.jp'; // デモ用アドレス入力
-            closeModal('settingsModal');
-        }
-
-        function clearDemoData() {
-            document.getElementById('diagnosisForm').reset();
-            document.getElementById('demoCustomerEmail').value = '';
-            closeModal('settingsModal');
-        }
-
-        function resetApp() {
-            document.getElementById('diagnosisForm').reset();
-            document.getElementById('orderForm').reset();
-            document.getElementById('orderFormContainer').classList.remove('hidden');
-            document.getElementById('orderSuccess').classList.add('hidden');
-            showStep('step1');
-        }
-
-        // STEP5の「無料キャンペーン枠を仮押さえする」ボタンから呼ばれる関数
-        function openOrderModal() {
-            // 設定画面に入力されている「顧客メールアドレス（デモ用）」を取得
-            const demoEmail = document.getElementById('demoCustomerEmail').value;
-            // 仮オーダーフォームのメールアドレス欄にセット
-            if(demoEmail) {
-                document.getElementById('customerEmail').value = demoEmail;
-            }
-            
-            // モーダルを開く
-            openModal('orderModal');
-        }
-
-        // --- 仮オーダー送信 ---
-        function submitOrder() {
-            currentOrderData = {
-                name: document.getElementById('orderName').value,
-                url: document.getElementById('orderUrlInput').value,
-                email: document.getElementById('customerEmail').value,
-                salesEmail: document.getElementById('salesEmail').value || 'sales-team@smartpage.jp'
-            };
-            
-            document.getElementById('orderFormContainer').classList.add('hidden');
-            document.getElementById('orderSuccess').classList.remove('hidden');
-        }
-
-        // --- メール送信モーダル関連 ---
-        function openSendMethodModal() {
-            closeModal('orderModal');
-            
-            const subject = `【Smartpage仮申込】${currentOrderData.name} 様`;
-            const body = `※本メールは自社担当者およびお客様へ同時送信されています。\n\n以下の内容で初期構築無料枠の仮申し込みを受け付けました。\n\n・貴社名/店舗名: ${currentOrderData.name}\n・対象WebサイトURL: ${currentOrderData.url}\n・顧客連絡先メール: ${currentOrderData.email}\n\n担当者より追って正式なご案内をさせていただきます。`;
-            
-            const toEmails = `${currentOrderData.salesEmail}, ${currentOrderData.email}`;
-            
-            document.getElementById('displaySalesEmail').innerText = toEmails;
-            document.getElementById('copyTextarea').value = `宛先: ${toEmails}\n件名: ${subject}\n\n${body}`;
-            
-            window.mailSubject = subject;
-            window.mailBody = body;
-            window.mailTo = toEmails;
-            
-            openModal('sendMethodModal');
-        }
-
-        function sendViaMailer() {
-            const link = `mailto:${window.mailTo}?subject=${encodeURIComponent(window.mailSubject)}&body=${encodeURIComponent(window.mailBody)}`;
-            window.location.href = link;
-        }
-
-        function sendViaGmail() {
-            const link = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(window.mailTo)}&su=${encodeURIComponent(window.mailSubject)}&body=${encodeURIComponent(window.mailBody)}`;
-            window.open(link, '_blank');
-        }
-
-        function copyMailText() {
-            const textarea = document.getElementById('copyTextarea');
-            textarea.select();
-            document.execCommand('copy');
-            
-            const copyBtn = document.getElementById('copyBtn');
-            const orgHtml = copyBtn.innerHTML;
-            copyBtn.innerHTML = '<i class="fa-solid fa-check mr-2"></i> コピーしました！';
-            copyBtn.classList.replace('bg-blue-50', 'bg-green-500');
-            copyBtn.classList.replace('text-blue-700', 'text-white');
-            copyBtn.classList.replace('border-blue-200', 'border-green-500');
-            
-            setTimeout(() => {
-                copyBtn.innerHTML = orgHtml;
-                copyBtn.classList.replace('bg-green-500', 'bg-blue-50');
-                copyBtn.classList.replace('text-white', 'text-blue-700');
-                copyBtn.classList.replace('border-green-500', 'border-blue-200');
-            }, 2000);
-        }
-    </script>
-</body>
-</html>
+                                <h4 class="font-bold text-gray-800 flex items-center">AIによる新サイト仮構築
