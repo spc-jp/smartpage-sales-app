@@ -138,7 +138,7 @@
                         <select id="industrySelect" class="w-full pl-11 pr-4 py-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-secondary focus:border-secondary outline-none transition text-lg appearance-none bg-gray-50 focus:bg-white cursor-pointer">
                             <option value="restaurant">飲食・カフェ</option>
                             <option value="construction">建設業・リフォーム</option>
-                            <option value="manufacturing">製造業</option>
+                            <option value="manufacturing" selected>製造業</option>
                             <option value="wholesale">卸業・商社</option>
                             <option value="service">サービス業全般</option>
                             <option value="salon">美容室・サロン</option>
@@ -532,20 +532,20 @@
                     </div>
                 </div>
             </div>
-            
-            <!-- ご検討中の企業様へのバナーを下部に移動 -->
-            <div class="mt-12 bg-gradient-to-r from-blue-50 to-orange-50 p-8 rounded-xl border border-blue-100 shadow-md relative overflow-hidden max-w-4xl mx-auto">
-                <div class="absolute top-0 right-0 bg-accent text-white text-xs font-bold px-3 py-1 rounded-bl-lg shadow">期間限定</div>
-                <h3 class="text-xl font-bold text-primary mb-2 text-center">ご検討中の企業様へ</h3>
-                <p class="text-sm text-gray-700 mb-6 text-center">
-                    現在、AIを活用した「初期構築費」の無料キャンペーン枠をご用意しております。<br>まずは仮押さえを行い、スムーズなリプレイスの準備を始めませんか？
-                </p>
-                <div class="flex justify-center">
-                    <button onclick="openOrderModal()" class="w-full md:w-2/3 bg-accent hover:bg-orange-600 text-white font-bold py-4 rounded-xl shadow-lg transform transition hover:-translate-y-1 text-lg flex items-center justify-center">
-                        <i class="fa-solid fa-paper-plane mr-2"></i> 無料キャンペーン枠を仮押さえする
-                    </button>
-                </div>
-            </div>
+        </div>
+    </main>
+
+    <!-- フッター (監修クレジット) -->
+    <footer class="text-center py-6 text-gray-400 text-sm no-print">
+        <p>監修：前田経営研究所</p>
+    </footer>
+
+    <!-- ==========================================
+         MODALS 
+    =========================================== -->
+    
+    <!-- 使い方モーダル -->
+    <div id="howtoModal" class="fixed inset-0 z-50 flex items-center justify-center hidden no-print">
             
             <div class="pt-6 text-center">
                 <button onclick="resetApp()" class="text-gray-400 hover:text-gray-600 underline text-sm"><i class="fa-solid fa-rotate-left mr-1"></i> 最初からやり直す</button>
@@ -989,9 +989,9 @@
         }
 
         function fillDemoData() {
-            document.getElementById('targetUrl').value = 'https://old-bakery-sample.co.jp';
-            document.getElementById('industrySelect').value = 'restaurant';
-            document.getElementById('demoCustomerEmail').value = 'info@old-bakery-sample.co.jp'; // デモ用アドレス入力
+            document.getElementById('targetUrl').value = 'https://yamada-mfg-sample.co.jp';
+            document.getElementById('industrySelect').value = 'manufacturing';
+            document.getElementById('demoCustomerEmail').value = 'info@yamada-mfg-sample.co.jp'; // デモ用アドレス入力
             closeModal('settingsModal');
         }
 
