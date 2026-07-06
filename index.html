@@ -523,7 +523,7 @@
                                 <i class="fa-solid fa-bars text-gray-400 text-xl"></i>
                             </div>
                             <div class="relative img-editable editable-element cursor-pointer group">
-                                <img id="demoHeroImg" src="" alt="Hero Image" class="w-full h-48 object-cover">
+                                <img id="demoHeroImg" src="" alt="Hero Image" class="w-full h-48 object-cover" onerror="handleImgError(this, 'hero')">
                                 <div class="absolute inset-0 bg-black bg-opacity-40 flex flex-col justify-center items-center text-white p-4 text-center group-hover:bg-opacity-50 transition">
                                     <h2 id="demoCatchphrase" contenteditable="true" class="text-2xl font-bold mb-2 shadow-sm editable-element outline-none"></h2>
                                 </div>
@@ -536,11 +536,11 @@
                                 <h3 class="font-bold text-primary mb-3 ml-1 mt-6 text-sm">おすすめコンテンツ</h3>
                                 <div class="grid grid-cols-2 gap-3 mb-6">
                                     <div class="bg-white rounded-lg shadow-sm overflow-hidden img-editable editable-element cursor-pointer">
-                                        <div class="h-24 bg-gray-200"><img id="demoSubImg1" src="" class="w-full h-full object-cover"></div>
+                                        <div id="subBox1" class="h-24 bg-gray-200"><img id="demoSubImg1" src="" class="w-full h-full object-cover" onerror="handleImgError(this, 'サービス詳細')"></div>
                                         <div class="p-2 text-xs font-bold text-center text-gray-700">サービス詳細</div>
                                     </div>
                                     <div class="bg-white rounded-lg shadow-sm overflow-hidden img-editable editable-element cursor-pointer">
-                                        <div class="h-24 bg-gray-200"><img id="demoSubImg2" src="" class="w-full h-full object-cover"></div>
+                                        <div id="subBox2" class="h-24 bg-gray-200"><img id="demoSubImg2" src="" class="w-full h-full object-cover" onerror="handleImgError(this, 'お客様の声')"></div>
                                         <div class="p-2 text-xs font-bold text-center text-gray-700">お客様の声</div>
                                     </div>
                                 </div>
@@ -826,7 +826,7 @@
 
         const industryData = {
             'restaurant': { 
-                name: 'Cafe & Restaurant', 
+                name: '貴社名がここに入ります', 
                 oldText: '当店は1998年の創業以来、地元の皆様に愛される味を守り続けてまいりました。特に素材にはこだわっており、毎朝市場で仕入れる新鮮な野菜と、契約農家から直接買い付けるお肉を使用しております。ご家族連れからカップルまで、幅広いお客様に楽しんでいただけるよう、豊富なメニューを取り揃えておりますので、ぜひ一度ご来店ください。皆様のお越しを心よりお待ち申し上げております。',
                 newCatch: 'こだわりの味を、心地よい空間で。',
                 newSub: '毎朝仕入れる新鮮素材で、特別なひとときを。',
@@ -836,7 +836,7 @@
                 sub2: 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=200&q=80'
             },
             'construction': { 
-                name: '鈴木建設工業', 
+                name: '貴社名がここに入ります', 
                 oldText: '弊社は長年にわたり地域密着型で建築全般、土木工事、リフォーム工事などを請け負ってまいりました。安全第一をモットーに、熟練の職人が確かな技術で施工いたします。公共事業から一般住宅の大規模なリノベーションまで、どんなことでもご相談ください。見積もりは無料で行っております。安心と信頼の施工をお約束いたします。',
                 newCatch: '確かな技術で、地域の基盤を創る。',
                 newSub: '長年の実績と信頼。安全を第一に、最適な施工をお届けします。',
@@ -846,7 +846,7 @@
                 sub2: 'https://images.unsplash.com/photo-1541888086425-d81bb19240f5?auto=format&fit=crop&w=200&q=80'
             },
             'manufacturing': { 
-                name: '株式会社 ヤマダ製作所', 
+                name: '貴社名がここに入ります', 
                 oldText: '当社は昭和の創業以来、金属の精密部品の切削加工を主業としてまいりました。職人の長年の経験と勘による高品質な製品づくりには定評があり、多くのお客様から信頼をいただいております。近年は最新のNC旋盤やマシニングセンタも導入し、多品種少量生産から量産まで幅広く対応可能です。お見積もりや図面のご相談など、お気軽にお問い合わせください。',
                 newCatch: '精密加工の極み、日本のモノづくりを支える。',
                 newSub: '熟練の技と最新設備の融合で、あらゆるニーズに応えます。',
@@ -856,7 +856,7 @@
                 sub2: 'https://images.unsplash.com/photo-1531704253303-34e2c0e8f000?auto=format&fit=crop&w=200&q=80'
             },
             'wholesale': { 
-                name: 'グローバル商事株式会社', 
+                name: '貴社名がここに入ります', 
                 oldText: '弊社は食品・日用雑貨の総合卸売商社として、地域に根ざした事業を展開しております。全国のメーカー様から良質な商品を仕入れ、地域の小売店様、飲食店様へ迅速かつ確実にお届けすることが私たちの使命です。豊富な商品知識を持った営業担当が、お客様の売上アップに貢献するご提案をさせていただきます。新規お取引も随時募集しておりますのでご連絡ください。',
                 newCatch: '地域と全国をつなぐ、流通のベストパートナー。',
                 newSub: '豊富な品揃えと迅速な配送で、貴社のビジネス成長をサポート。',
@@ -866,7 +866,7 @@
                 sub2: 'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=200&q=80'
             },
             'service': { 
-                name: 'クリーンライフサービス', 
+                name: '貴社名がここに入ります', 
                 oldText: '当社はハウスクリーニング、オフィス清掃、マンションの定期清掃など、生活や業務に関わるあらゆる清掃サービスを提供しています。共働き世帯の増加や高齢化社会において、私たちのサービスの需要は高まっています。スタッフの教育には特に力を入れており、礼儀正しく、丁寧な作業を徹底しております。無料でお見積りにお伺いしますので、お困りごとがあれば何でもご相談ください。',
                 newCatch: 'あなたの「困った」を、「助かった」に変える。',
                 newSub: '高品質なプロの清掃サービスで、快適な環境をお届けします。',
@@ -876,7 +876,7 @@
                 sub2: 'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=200&q=80'
             },
             'salon': { 
-                name: 'Hair Salon ルミナス', 
+                name: '貴社名がここに入ります', 
                 oldText: '当サロンでは、お客様一人ひとりの髪質や骨格に合わせたカウンセリングを行い、魅力を最大限に引き出すスタイルのご提案をしております。最新のトリートメントメニューも導入しており、ダメージヘアでお悩みの方にもご好評いただいております。アットホームな雰囲気の中で、リラックスした時間をお過ごしください。完全予約制となっておりますので、お電話にてご予約をお願いいたします。',
                 newCatch: 'あなただけの美しさを引き出す。',
                 newSub: '丁寧なカウンセリングと最新ケアで、理想の髪へ。',
@@ -886,7 +886,7 @@
                 sub2: 'https://images.unsplash.com/photo-1595476108010-b4d1f10d5e43?auto=format&fit=crop&w=200&q=80'
             },
             'professional': { 
-                name: '山田総合法律事務所', 
+                name: '貴社名がここに入ります', 
                 oldText: '当事務所は、企業法務から個人の法律相談まで、幅広い分野を取り扱っております。複雑化する現代社会において、法的トラブルはいつ誰に降りかかるかわかりません。私たちは依頼者様の立場に立ち、親身になって解決策を模索し、最良の結果を導き出すよう尽力いたします。初回相談は30分無料で行っておりますので、一人で悩まずに、まずは専門家である私たちにお気軽にご相談ください。',
                 newCatch: '確かな実績で、あなたのビジネスを支援。',
                 newSub: '企業法務から個人相談まで、迅速かつ的確に解決へ導きます。',
@@ -896,7 +896,7 @@
                 sub2: 'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=200&q=80'
             },
             'other': { 
-                name: '株式会社ネクスト', 
+                name: '貴社名がここに入ります', 
                 oldText: '私たちは「テクノロジーで社会をより良くする」という理念のもと、革新的なITソリューションを提供している企業です。常に変化する市場ニーズを捉え、最新の技術を駆使して、クライアント企業の課題解決と成長をサポートしています。システム開発、コンサルティング、運用保守までワンストップで対応可能です。これからも常に挑戦し続け、価値あるサービスを創造してまいります。',
                 newCatch: '未来を創造するイノベーション。',
                 newSub: '最新テクノロジーで、ビジネスの課題を劇的に解決します。',
@@ -1059,18 +1059,65 @@
             colorLcp(m.lcp);
         }
 
+        // ============================================================
+        // ★画像の安全網：外部画像が切れても真っ白にせず代替表示する
+        // （社長の前で画像が消える事故を防ぐ保険）
+        // ============================================================
+        function handleImgError(img, label) {
+            if (img.dataset.fallback === "1") return;
+            img.dataset.fallback = "1";
+            const box = img.parentElement;
+
+            if (label === 'hero') {
+                // ヒーローはキャッチコピーが上に重なるので、imgだけ隠して灰色背景にする
+                img.style.visibility = 'hidden';
+                box.classList.add('bg-slate-300', 'h-48');
+                return;
+            }
+
+            // サブ画像は枠ごとアイコン＋ラベルに置き換える
+            const iconMap = { 'サービス詳細': 'fa-gears', 'お客様の声': 'fa-comment-dots' };
+            const icon = iconMap[label] || 'fa-image';
+            box.className = 'h-24 bg-gray-100 flex flex-col items-center justify-center text-gray-400';
+            box.innerHTML =
+                '<i class="fa-solid ' + icon + ' text-xl mb-1"></i>' +
+                '<span class="text-[10px] font-bold">' + label + '</span>';
+        }
         function setupDemoData(industryKey) {
             const data = industryData[industryKey] || industryData['other'];
             document.getElementById('demoOldText').innerText = data.oldText;
             window.currentAIData = data; 
             document.getElementById('demoLogo').innerText = data.name;
             document.getElementById('demoCatchphrase').innerText = data.newCatch;
-            document.getElementById('demoHeroImg').src = data.hero;
-            document.getElementById('demoSubImg1').src = data.sub1;
-            document.getElementById('demoSubImg2').src = data.sub2;
+
+            // 画像枠を毎回リセットしてから読み込む（前回の代替表示を消す）
+            resetImg('demoHeroImg', data.hero, 'hero');
+            resetImg('demoSubImg1', data.sub1, 'サービス詳細');
+            resetImg('demoSubImg2', data.sub2, 'お客様の声');
             
-            document.getElementById('orderName').value = data.name;
+            document.getElementById('orderName').value = '';
             document.getElementById('orderUrlInput').value = document.getElementById('targetUrl').value;
+        }
+
+        // 画像枠を元の状態に戻してから新しい画像を読み込む
+        function resetImg(id, src, label) {
+            if (label === 'hero') {
+                const img = document.getElementById('demoHeroImg');
+                if (!img) return;
+                img.dataset.fallback = "";
+                img.style.visibility = '';
+                img.parentElement.classList.remove('bg-slate-300');
+                img.src = src;
+                return;
+            }
+
+            // サブ画像は枠ごと作り直す（前回失敗して消えていても確実に復活）
+            const boxId = (id === 'demoSubImg1') ? 'subBox1' : 'subBox2';
+            const box = document.getElementById(boxId);
+            if (!box) return;
+            box.className = 'h-24 bg-gray-200';
+            box.innerHTML = '<img id="' + id + '" src="" class="w-full h-full object-cover" onerror="handleImgError(this, \'' + label + '\')">';
+            document.getElementById(id).src = src;
         }
 
         function drawRadarChart() {
