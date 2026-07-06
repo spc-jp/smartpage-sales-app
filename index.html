@@ -5,8 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smartpage リプレイス営業支援アプリ</title>
     
-    <!-- ファビコン設定 -->
-    <link rel="icon" href="https://spc-jp.github.io/smartpage-sales-app/favicon.png">
+    <!-- ファビコン設定（PC・スマホ・SNSシェア対応）-->
+    <link rel="icon" type="image/png" href="https://spc-jp.github.io/smartpage-sales-app/favicon.png?v=2">
+    <link rel="shortcut icon" type="image/png" href="https://spc-jp.github.io/smartpage-sales-app/favicon.png?v=2">
+    <link rel="apple-touch-icon" href="https://spc-jp.github.io/smartpage-sales-app/favicon.png?v=2">
+
+    <!-- SNS・LINEシェア時のサムネイル（OGP）-->
+    <meta property="og:title" content="Smartpage リプレイス営業支援アプリ">
+    <meta property="og:description" content="URLを入れるだけで、WordPressの弱点とリスクをその場で見える化。">
+    <meta property="og:image" content="https://spc-jp.github.io/smartpage-sales-app/favicon.png?v=2">
+    <meta property="og:type" content="website">
 
     <!-- Tailwind CSS (デザイン用) -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -179,6 +187,69 @@
             </div>
             
             <div class="p-8 md:p-12">
+
+                <!-- ▼▼▼ PageSpeed 実測パネル（本物データ）▼▼▼ -->
+                <div id="realScorePanel" class="mb-10 bg-slate-50 rounded-2xl border border-slate-200 p-6 md:p-8">
+                    <div class="flex items-center gap-2 mb-4 flex-wrap">
+                        <span class="bg-blue-100 text-secondary text-xs font-bold px-3 py-1 rounded-full flex items-center">
+                            <i class="fa-solid fa-bolt mr-1"></i>実測データ
+                        </span>
+                        <span class="text-sm text-gray-500">Googleに問い合わせた本物の数値です</span>
+                        <span id="realScoreStatus" class="text-xs text-gray-400 md:ml-auto"></span>
+                    </div>
+
+                    <!-- 診断対象 -->
+                    <div class="flex items-baseline gap-2 mb-5 flex-wrap">
+                        <span class="text-sm text-gray-500 shrink-0">診断対象</span>
+                        <span id="realTargetUrl" class="text-sm md:text-base font-bold text-gray-800 break-all">-</span>
+                        <span id="realHttps" class="md:ml-auto text-xs font-bold shrink-0"></span>
+                    </div>
+
+                    <!-- 3つのスコア -->
+                    <div class="grid grid-cols-3 gap-3 md:gap-4 mb-4">
+                        <div class="bg-white border border-gray-200 rounded-xl p-4 text-center shadow-sm">
+                            <div class="text-xs md:text-sm text-gray-500 mb-1">表示速度</div>
+                            <div id="scorePerf" class="text-3xl font-bold text-gray-400">-</div>
+                            <div class="text-xs text-gray-400">/ 100</div>
+                        </div>
+                        <div class="bg-white border border-gray-200 rounded-xl p-4 text-center shadow-sm">
+                            <div class="text-xs md:text-sm text-gray-500 mb-1">SEO</div>
+                            <div id="scoreSeo" class="text-3xl font-bold text-gray-400">-</div>
+                            <div class="text-xs text-gray-400">/ 100</div>
+                        </div>
+                        <div class="bg-white border border-gray-200 rounded-xl p-4 text-center shadow-sm">
+                            <div class="text-xs md:text-sm text-gray-500 mb-1">推奨対応</div>
+                            <div id="scoreBp" class="text-3xl font-bold text-gray-400">-</div>
+                            <div class="text-xs text-gray-400">/ 100</div>
+                        </div>
+                    </div>
+
+                    <!-- 実測メトリクス -->
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+                        <div id="metricLcpBox" class="rounded-xl p-3 text-center border bg-white border-gray-200">
+                            <div class="text-xs text-gray-500">表示まで(LCP)</div>
+                            <div id="metricLcp" class="text-base font-bold text-gray-800">-</div>
+                        </div>
+                        <div class="rounded-xl p-3 text-center border bg-white border-gray-200">
+                            <div class="text-xs text-gray-500">初回描画(FCP)</div>
+                            <div id="metricFcp" class="text-base font-bold text-gray-800">-</div>
+                        </div>
+                        <div class="rounded-xl p-3 text-center border bg-white border-gray-200">
+                            <div class="text-xs text-gray-500">ガタつき(CLS)</div>
+                            <div id="metricCls" class="text-base font-bold text-gray-800">-</div>
+                        </div>
+                        <div class="rounded-xl p-3 text-center border bg-white border-gray-200">
+                            <div class="text-xs text-gray-500">応答遅延(TBT)</div>
+                            <div id="metricTbt" class="text-base font-bold text-gray-800">-</div>
+                        </div>
+                    </div>
+
+                    <p class="text-xs text-gray-400 mt-4 pt-3 border-t border-gray-200">
+                        ※ これは面談前の「気づき」です。正式診断は御社の状況を伺ったうえで担当が行います。
+                    </p>
+                </div>
+                <!-- ▲▲▲ PageSpeed 実測パネル ここまで ▲▲▲ -->
+
                 <!-- 診断レポート部分 -->
                 <div class="flex flex-col lg:flex-row gap-8 mb-10">
                     <!-- 左：レーダーチャート -->
@@ -745,6 +816,14 @@
     </div>
 
     <script>
+        // ============================================================
+        // ★設定：ここだけ変えればOK（PageSpeed診断ワーカーのアドレス）
+        // ============================================================
+        const PSI_WORKER_URL = "https://smartpage-sales-app.yymmatsu.workers.dev";
+
+        // 実測結果を受け取るための入れ物
+        let realScorePromise = null;
+
         const industryData = {
             'restaurant': { 
                 name: 'Cafe & Restaurant', 
@@ -858,6 +937,10 @@
             const industryKey = document.getElementById('industrySelect').value;
             
             setupDemoData(industryKey);
+
+            // ★裏で本物のPageSpeed診断を開始（演出の裏でこっそり取得）
+            realScorePromise = fetchRealScore(urlInput);
+
             showStep('loading');
 
             const consoleEl = document.getElementById('consoleOutput');
@@ -883,9 +966,97 @@
                     i++;
                 } else {
                     clearInterval(logInterval);
-                    setTimeout(() => showStep('step2'), 800);
+                    // ★実測データを受け取り、パネルに反映してからstep2を表示
+                    setTimeout(async () => {
+                        const data = await realScorePromise;
+                        renderRealScore(data);
+                        showStep('step2');
+                    }, 800);
                 }
             }, 300);
+        }
+
+        // ============================================================
+        // ★PageSpeed 実測まわり
+        // ============================================================
+
+        // ワーカーに本物の診断を依頼する
+        async function fetchRealScore(url) {
+            try {
+                const res = await fetch(PSI_WORKER_URL + "/?url=" + encodeURIComponent(url));
+                return await res.json();
+            } catch (e) {
+                // 通信できなくても演出は止めない（社長の前で固まらない保険）
+                return { error: "通信失敗", detail: String(e) };
+            }
+        }
+
+        // スコア数字に色をつける（90以上=緑 / 50以上=黄 / それ未満=赤）
+        function setScore(id, val) {
+            const el = document.getElementById(id);
+            el.classList.remove('text-green-600', 'text-yellow-500', 'text-danger', 'text-gray-400');
+            if (val === null || val === undefined || isNaN(val)) {
+                el.innerText = '-';
+                el.classList.add('text-gray-400');
+                return;
+            }
+            el.innerText = val;
+            if (val >= 90) el.classList.add('text-green-600');
+            else if (val >= 50) el.classList.add('text-yellow-500');
+            else el.classList.add('text-danger');
+        }
+
+        // LCP（表示までの時間）は営業の要。2.5秒以上なら赤く強調
+        function colorLcp(lcpStr) {
+            const box = document.getElementById('metricLcpBox');
+            const label = document.getElementById('metricLcp');
+            const num = parseFloat(String(lcpStr));
+            box.className = 'rounded-xl p-3 text-center border';
+            const isSlow = !isNaN(num) && String(lcpStr).includes('s') && num >= 2.5;
+            if (isSlow) {
+                box.classList.add('bg-red-50', 'border-red-100');
+                label.className = 'text-base font-bold text-danger';
+            } else {
+                box.classList.add('bg-white', 'border-gray-200');
+                label.className = 'text-base font-bold text-gray-800';
+            }
+        }
+
+        // 実測パネルに数値を反映する
+        function renderRealScore(data) {
+            const panel = document.getElementById('realScorePanel');
+            const statusEl = document.getElementById('realScoreStatus');
+
+            // 取れなかったときはパネルを静かに隠す（演出と既存レポートは進む）
+            if (!data || data.error) {
+                panel.classList.add('hidden');
+                return;
+            }
+            panel.classList.remove('hidden');
+            statusEl.innerText = '解析完了';
+
+            document.getElementById('realTargetUrl').innerText = data.finalUrl || data.url || '-';
+
+            const httpsEl = document.getElementById('realHttps');
+            if (data.isHttps) {
+                httpsEl.innerHTML = '<i class="fa-solid fa-lock mr-1"></i>HTTPS対応';
+                httpsEl.className = 'md:ml-auto text-xs font-bold text-green-600 shrink-0';
+            } else {
+                httpsEl.innerHTML = '<i class="fa-solid fa-lock-open mr-1"></i>未対応（HTTP）';
+                httpsEl.className = 'md:ml-auto text-xs font-bold text-danger shrink-0';
+            }
+
+            const s = data.score || {};
+            setScore('scorePerf', s.performance);
+            setScore('scoreSeo', s.seo);
+            setScore('scoreBp', s.bestPractices);
+
+            const m = data.metrics || {};
+            document.getElementById('metricLcp').innerText = m.lcp || '-';
+            document.getElementById('metricFcp').innerText = m.fcp || '-';
+            document.getElementById('metricCls').innerText = m.cls || '-';
+            document.getElementById('metricTbt').innerText = m.tbt || '-';
+            colorLcp(m.lcp);
         }
 
         function setupDemoData(industryKey) {
