@@ -311,6 +311,10 @@
                     <button onclick="showStep('step3')" class="w-full md:w-auto bg-primary hover:bg-blue-900 text-white font-bold py-4 px-10 rounded-xl shadow-lg transform transition hover:-translate-y-1 text-lg flex items-center justify-center mx-auto">
                         AIによるコンテンツ最適化案を見る <i class="fa-solid fa-arrow-right ml-3"></i>
                     </button>
+                    <div class="mt-5 flex justify-center items-center gap-6">
+                        <button onclick="showStep('step1')" class="text-gray-400 hover:text-gray-600 text-sm flex items-center transition"><i class="fa-solid fa-arrow-left mr-1"></i> 前に戻る</button>
+                        <button onclick="resetApp()" class="text-gray-400 hover:text-gray-600 text-sm flex items-center transition"><i class="fa-solid fa-rotate-left mr-1"></i> はじめに戻る</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -375,6 +379,10 @@
                 <button onclick="showStep('step4')" class="bg-accent hover:bg-orange-600 text-white font-bold py-4 px-10 rounded-xl shadow-lg transform transition hover:-translate-y-1 text-lg flex items-center mx-auto">
                     Smartpageでの解決策を見る <i class="fa-solid fa-arrow-right ml-3"></i>
                 </button>
+                <div class="mt-5 flex justify-center items-center gap-6">
+                    <button onclick="showStep('step2')" class="text-gray-400 hover:text-gray-600 text-sm flex items-center transition"><i class="fa-solid fa-arrow-left mr-1"></i> 前に戻る</button>
+                    <button onclick="resetApp()" class="text-gray-400 hover:text-gray-600 text-sm flex items-center transition"><i class="fa-solid fa-rotate-left mr-1"></i> はじめに戻る</button>
+                </div>
             </div>
         </div>
 
@@ -496,6 +504,10 @@
                     <button onclick="showStep('step5')" class="bg-primary hover:bg-blue-900 text-white font-bold py-4 px-10 rounded-xl shadow-lg transform transition hover:-translate-y-1 text-lg flex items-center justify-center mx-auto">
                         実際のデモサイトを触ってみる <i class="fa-solid fa-mobile-screen-button ml-3"></i>
                     </button>
+                    <div class="mt-5 flex justify-center items-center gap-6">
+                        <button onclick="showStep('step3')" class="text-gray-400 hover:text-gray-600 text-sm flex items-center transition"><i class="fa-solid fa-arrow-left mr-1"></i> 前に戻る</button>
+                        <button onclick="resetApp()" class="text-gray-400 hover:text-gray-600 text-sm flex items-center transition"><i class="fa-solid fa-rotate-left mr-1"></i> はじめに戻る</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -929,6 +941,11 @@
             if (targetId === 'step2') drawRadarChart();
             if (targetId === 'step3') startAITyping();
             if (targetId === 'step5') animateSchedule();
+
+            // 画面が切り替わったら自動で一番上へ（社長に上まで戻ってもらう手間をなくす）
+            if (targetId !== 'loading') {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
         }
 
         function startDiagnosis() {
